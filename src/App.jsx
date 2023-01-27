@@ -5,6 +5,7 @@ import Auth from './pages/auth/auth'
 import  Dashboard  from './pages/dashboard'
 import  StudentList  from './pages/studentlist'
 import Logout from './components/auth/logout'
+import StudentDashboard from './pages/student_dashboard'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route element={<ProtectedRoutes />}>   
       <Route path="dashboard" element={<Dashboard/>} />  
       <Route path="studentlist" element={<StudentList />} /> 
+      <Route path="student" element={<StudentDashboard />} /> 
       </Route>
     </Routes>
   )
