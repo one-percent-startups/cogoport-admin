@@ -15,9 +15,7 @@ function classNames(...classes) {
 }
 
 const Dashboard = () => {
-
     
-
   return (
     <>
       <NavBar />
@@ -166,9 +164,9 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <Leaderboard className="8/12" />
+            <Leaderboard className="w-8/12" />
             <div className="3/12">
-              <h3 className="text-gray-400 mb-3">Overral Information</h3>
+              <h3 className="text-gray-400 mb-3">Overall Information</h3>
               <div className="mb-5">
                 <h3 className="text-sm font-semibold text-gray-500 mb-1">
                   Score
