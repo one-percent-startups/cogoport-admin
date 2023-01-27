@@ -7,8 +7,8 @@ const Auth = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [cogoportKey, setCogoportKey] = useState(
-    localStorage.getItem('cogoportKey')
+  const [cogoportAdminKey, setCogoportKey] = useState(
+    localStorage.getItem('cogoportAdminKey')
   )
 
   const performLogin = (values) => {
@@ -19,7 +19,7 @@ const Auth = () => {
         setLoading(false)
         setError(null)
         // setmoldToken(res.data)
-        localStorage.setItem('cogoportKey', JSON.stringify(res.data))
+        localStorage.setItem('cogoportAdminKey', JSON.stringify(res.data))
         navigate('/dashboard')
       })
       .catch((err) => {
@@ -29,8 +29,8 @@ const Auth = () => {
   }
 
   useEffect(() => {
-    localStorage.getItem('cogoportKey') && navigate('/dashboard')
-  }, [cogoportKey])
+    localStorage.getItem('cogoportAdminKey') && navigate('/dashboard')
+  }, [cogoportAdminKey])
 
   return (
     <div>
