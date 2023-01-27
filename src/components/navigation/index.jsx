@@ -9,6 +9,7 @@ import {
   Cog8ToothIcon,
 } from "@heroicons/react/24/outline";
 import logo from "../../assets/images/logo.png";
+import logo2 from "../../assets/images/logo2.png";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,218 +22,143 @@ const NavBar = () => {
   };
   return (
     <>
-      <Disclosure as="nav" className="bg-white-800 my-5">
-        {({ open }) => (
-          <>
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="flex h-16 items-center justify-between">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <img
-                      className="block h-8 w-auto lg:hidden"
-                      src={logo}
-                      alt="Your Company"
-                    />
-                    <img
-                      className="hidden h-8 w-auto lg:block"
-                      src={logo}
-                      alt="Your Company"
-                    />
-                  </div>
-                  <div className=" hidden sm:ml-12 sm:block">
-                    <div className="flex space-x-4">
-                      {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                      <a
-                        href="#"
-                        className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                      >
-                        Dashboard
-                      </a>
-                      <a
-                        href="/studentlist"
-                        className="rounded-md px-3 py-2 text-sm font-medium  hover:bg-gray-700 hover:text-white"
-                      >
-                        Students
-                      </a>
-                      <a
-                        href="#"
-                        className="rounded-md px-3 py-2 text-sm font-medium  hover:bg-gray-700 hover:text-white"
-                      >
-                        Curriculum
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex items-center">
-                    <button
-                      type="button"
-                      className="rounded-full  p-1 text-black-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    >
-                      <span className="sr-only">View notifications</span>
-                      <Cog8ToothIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
+      <button
+        data-drawer-target="default-sidebar"
+        data-drawer-toggle="default-sidebar"
+        aria-controls="default-sidebar"
+        type="button"
+        className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-sky-100 dark:focus:ring-gray-600"
+      >
+        <span className="sr-only">Open sidebar</span>
+        <svg
+          className="w-6 h-6"
+          aria-hidden="true"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+          ariaHidden="true"
+        >
+          <path
+            clip-rule="evenodd"
+            fill-rule="evenodd"
+            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+          ></path>
+        </svg>
+      </button>
 
-                    {/* Profile dropdown */}
-                    <Menu as="div" className="relative ml-3">
-                      <div>
-                        <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                          <span className="sr-only">Open user menu</span>
-                          <img
-                            className="h-8 w-8 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt=""
-                          />
-                        </Menu.Button>
-                      </div>
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
-                      >
-                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="#"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Your Profile
-                              </a>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="#"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Settings
-                              </a>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                                onClick={onLogout}
-                              >
-                                Sign out
-                              </a>
-                            )}
-                          </Menu.Item>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
-                  </div>
-                </div>
-                <div className="-mr-2 flex sm:hidden">
-                  {/* Mobile menu button */}
-                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                    <span className="sr-only">Open main menu</span>
-                    {open ? (
-                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                    ) : (
-                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                    )}
-                  </Disclosure.Button>
-                </div>
+      <aside
+        id="default-sidebar"
+        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r"
+        aria-label="Sidebar"
+      >
+        <div className="h-full pl-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+          <div className="mb-8">
+            <img src={logo} className="w-3/4" />
+          </div>
+          <div className="flex flex-col justify-between space-y-1 px-2 pb-4 h-full">
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="dashboard"
+                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-sky-100 focus:bg-sky-100"
+                >
+                  <span className="ml-3 text-md">Dashboard</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/studentlist"
+                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-sky-100 focus:bg-sky-100"
+                >
+                  <span className="flex-1 ml-3 whitespace-nowrap text-md">
+                    Student List
+                  </span>
+                  {/* <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-sky-100 dark:text-gray-300">Pro</span> */}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-sky-100 dark:hover:bg-sky-100"
+                >
+                  <span className="flex-1 ml-3 whitespace-nowrap text-md">
+                    Curiculum
+                  </span>
+                  {/* <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span> */}
+                </a>
+              </li>
+            </ul>
+            <div className="p-3 rounded-lg bg-sky-50 text-sky-800">
+              <p className="text-sm font-medium mt-3 mb-2">
+                Welcome to Cogo Academy!
+              </p>
+              <p className="text-sm">
+                Check out our new courses by clicking on any categories above!
+              </p>
+              <div className="py-10 my-5 rounded-lg bg-sky-100">
+                <img
+                  className="h-16 mx-auto w-100"
+                  src={logo2}
+                  alt="Your Company"
+                />
+              </div>
+              <div className="flex font-medium">
+                <span className="text-sm mr-3">©onepercentstartups</span>
               </div>
             </div>
+          </div>
+        </div>
+      </aside>
 
-            <Disclosure.Panel className="sm:hidden">
-              <div className="space-y-1 px-2 pt-2 pb-3">
-                {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-                >
-                  Dashboard
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as="a"
-                  href="/studentlist"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                >
-                  Students
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                >
-                  Curriculum
-                </Disclosure.Button>
-              </div>
-              <div className="border-t border-gray-700 pt-4 pb-3">
-                <div className="flex items-center px-5">
-                  <div className="flex-shrink-0">
-                    <img
-                      className="h-10 w-10 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
-                    />
-                  </div>
-                  <div className="ml-3">
-                    <div className="text-base font-medium text-white">
-                      Tom Cook
-                    </div>
-                    <div className="text-sm font-medium text-gray-400">
-                      tom@example.com
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
-                <div className="mt-3 space-y-1 px-2">
-                  <Disclosure.Button
-                    as="a"
-                    href="#"
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                  >
-                    Your Profile
-                  </Disclosure.Button>
-                  <Disclosure.Button
-                    as="a"
-                    href="#"
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                  >
-                    Settings
-                  </Disclosure.Button>
-                  <Disclosure.Button
-                    as="a"
-                    href="#"
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                  >
-                    Sign out
-                  </Disclosure.Button>
-                </div>
-              </div>
-            </Disclosure.Panel>
-          </>
-        )}
-      </Disclosure>
-
-      {/* <button><Logout/></button> */}
+      {/* <div className="p-4 sm:ml-64">
+   <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+      <div className="grid grid-cols-3 gap-4 mb-4">
+         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
+         </div>
+         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
+         </div>
+         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
+         </div>
+      </div>
+      <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+         <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
+      </div>
+      <div className="grid grid-cols-2 gap-4 mb-4">
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
+         </div>
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
+         </div>
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
+         </div>
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
+         </div>
+      </div>
+      <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+         <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
+         </div>
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
+         </div>
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
+         </div>
+         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
+         </div>
+      </div>
+   </div>
+</div> */}
     </>
   );
 };
