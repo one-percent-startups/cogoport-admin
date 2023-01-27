@@ -109,8 +109,8 @@ export default function Leaderboard() {
             </Menu>
           </div>
         </div>
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-400 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table className="w-full text-sm text-left text-gray-500">
+          <thead className="text-xs text-gray-400 uppercase bg-gray-50">
             <tr>
               <th scope="col" className=" px-10 py-3">
                 Ranking
@@ -124,10 +124,10 @@ export default function Leaderboard() {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <tr className="bg-white border-b">
               <th
                 scope="row"
-                className="px-10 py-4 text-lg flex font-semibold text-black text-black font-medium  whitespace-nowrap dark:text-white"
+                className="px-10 py-4 text-lg flex font-semibold text-black text-black font-medium  whitespace-nowrap"
               >
                <StarIcon className="text-yellow-500 w-4 mr-1" />01
               </th>
@@ -139,10 +139,10 @@ export default function Leaderboard() {
               </td>
             </tr>
 
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <tr className="bg-white border-b">
               <th
                 scope="row"
-                className="px-10 flex py-4 text-lg font-semibold text-black text-black font-medium  whitespace-nowrap dark:text-white"
+                className="px-10 flex py-4 text-lg font-semibold text-black text-black font-medium  whitespace-nowrap"
               >
                 <StarIcon className="text-gray-500 w-4 mr-1" />02
               </th>
@@ -154,10 +154,10 @@ export default function Leaderboard() {
               </td>
             </tr>
 
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <tr className="bg-white border-b">
               <th
                 scope="row"
-                className="px-10 py-4 flex text-lg font-semibold text-black text-black font-medium  whitespace-nowrap dark:text-white"
+                className="px-10 py-4 flex text-lg font-semibold text-black text-black font-medium  whitespace-nowrap"
               >
                <StarIcon className="text-amber-900 w-4 mr-1" /> 03
               </th>
