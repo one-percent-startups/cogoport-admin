@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom'
 
 const Logout = () => {
-  localStorage.removeItem('cogoportKey')
+  localStorage.removeItem('cogoportAdminKey')
   return <Navigate to="/" />
 }
 

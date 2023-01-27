@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
 const userAuth = () => {
-  const user = { loggedIn : localStorage.getItem('cogoportKey')  }
+  const user = { loggedIn : localStorage.getItem('cogoportAdminKey')  }
   return user && user.loggedIn
 }
 const ProtectedRoutes = () => {

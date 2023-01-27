@@ -1,7 +1,6 @@
 import classNames from '../utils/classname';
 
-
-const sizes= {
+const sizes = {
   xl: [
     'border-white border-[5px] h-24 w-24 sm:h-28 sm:w-28 md:h-32 md:w-32 3xl:h-40 3xl:w-40 3xl:border-8 shadow-large',
   ],
@@ -24,6 +23,7 @@ function Avatar({
   shape = 'circle',
   width,
   height,
+  text = '',
 }) {
   const sizeClassNames = sizes[size];
   return (

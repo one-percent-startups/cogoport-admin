@@ -17,91 +17,81 @@ export default function Sidebar({ className }) {
           </div>
           <Avatar
             image={
-              'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80'
+              'https://img.freepik.com/free-vector/illustration-web-design_53876-5835.jpg?w=740&t=st=1674844562~exp=1674845162~hmac=b58988180586fec271791eb3e945363ec9b438b4a8166615ffb772b889d03568'
             }
-            alt="Author"
+            alt="B1"
             className="mx-auto mb-3"
             size="lg"
           />
 
           <h3 className="mb-2 text-center text-sm uppercase tracking-wider text-gray-500  3xl:mb-3">
-            Data Coming
+            Batch 1
           </h3>
           <div class="mt-6 grid grid-cols-3 gap-6 text-center lg:text-left bg-card-gray p-2 m-2 rounded-lg">
             <div className="text-center">
-              <p class="text-xs font-semibold text-gray-500">Posts</p>
-              <p class="font-bold text-zinc-700">345</p>
+              <p class="text-xs font-semibold text-gray-500">Exercise</p>
+              <p class="font-bold text-zinc-700">45</p>
             </div>
 
             <div className="text-center">
-              <p class="text-xs font-semibold text-gray-500">Followers</p>
-              <p class="font-bold text-zinc-700">200k</p>
+              <p class="text-xs font-semibold text-gray-500">Problem</p>
+              <p class="font-bold text-zinc-700">30</p>
             </div>
 
             <div className="text-center">
-              <p class="text-xs font-semibold text-gray-500">Following</p>
-              <p class="font-bold text-zinc-700">38</p>
+              <p class="text-xs font-semibold text-gray-500">Project</p>
+              <p class="font-bold text-zinc-700">07</p>
             </div>
           </div>
           <div className="h-screen overflow-y-scroll">
-            <p className="ml-4 font-semibold mt-4">Schedule</p>
-            <div className="h-full mb-6">
-              <div class="mt-6 text-center lg:text-left bg-white p-2 m-2 rounded-lg flex justify-evenly items-center">
+            <p className="font-semibold ml-4 mt-2">Schedule</p>
+            <div className="h-full mb-2">
+              <div class="mt-2 text-center lg:text-left bg-white p-2 ml-3 m-auto rounded-lg flex justify-evenly items-center">
                 <CheckCircleIcon className="h-6 w-6" />
                 <div className="">
-                  <p className="font-bold text-sm">Software Architecture</p>
+                  <p className="font-bold text-sm">HTML and CSS</p>
                   <p className="text-xs text-gray-400">
-                    May 2,2022 from 8am to 10am
+                    Jan 30,2023 8am to 10am
                   </p>
                 </div>
                 <FolderOpenIcon className="h-6 w-6" />
               </div>
-              <div class="mt-2 text-center lg:text-left bg-white p-2 m-2 rounded-lg flex justify-evenly items-center">
+              <div class="mt-2 text-center lg:text-left bg-white p-2 ml-3 m-auto rounded-lg flex justify-evenly items-center">
                 <CheckCircleIcon className="h-6 w-6" />
                 <div className="">
-                  <p className="font-bold text-sm">Digital Illustration</p>
+                  <p className="font-bold text-sm">Javascript Basic</p>
                   <p className="text-xs text-gray-400">
-                    May 2,2022 from 8am to 10am
+                    Feb 01,2023 8am to 10am
                   </p>
                 </div>
                 <FolderOpenIcon className="h-6 w-6" />
               </div>
-              <div class="mt-2 text-center lg:text-left bg-white p-2 m-2 rounded-lg flex justify-evenly items-center">
+              <div class="mt-2 text-center lg:text-left bg-white p-2 ml-3 m-auto rounded-lg flex justify-evenly items-center">
                 <CheckCircleIcon className="h-6 w-6" />
                 <div className="">
-                  <p className="font-bold text-sm">Digital Illustration</p>
+                  <p className="font-bold text-sm">HTML, CSS and JS</p>
                   <p className="text-xs text-gray-400">
-                    May 2,2022 from 8am to 10am
+                    Feb 02,2023 8am to 10am
                   </p>
                 </div>
                 <FolderOpenIcon className="h-6 w-6" />
               </div>
-              <div class="mt-2 text-center lg:text-left bg-white p-2 m-2 rounded-lg flex justify-evenly items-center">
+              <div class="mt-2 text-center lg:text-left bg-white p-2 ml-3 m-auto rounded-lg flex justify-evenly items-center">
                 <CheckCircleIcon className="h-6 w-6" />
                 <div className="">
-                  <p className="font-bold text-sm">Digital Illustration</p>
+                  <p className="font-bold text-sm">Javascript Advance</p>
                   <p className="text-xs text-gray-400">
-                    May 2,2022 from 8am to 10am
+                    Feb 05,2023 8am to 10am
                   </p>
                 </div>
                 <FolderOpenIcon className="h-6 w-6" />
               </div>
-              <div class="mt-2 text-center lg:text-left bg-white p-2 m-2 rounded-lg flex justify-evenly items-center">
+              <div class="mt-2 text-center lg:text-left bg-white p-2 ml-3 m-auto rounded-lg flex justify-evenly items-center">
                 <CheckCircleIcon className="h-6 w-6" />
                 <div className="">
-                  <p className="font-bold text-sm">Digital Illustration</p>
+                  <p className="font-bold text-sm">Basic Algorithm</p>
                   <p className="text-xs text-gray-400">
-                    May 2,2022 from 8am to 10am
-                  </p>
-                </div>
-                <FolderOpenIcon className="h-6 w-6" />
-              </div>
-              <div class="mt-2 text-center lg:text-left bg-white p-2 m-2 rounded-lg flex justify-evenly items-center">
-                <CheckCircleIcon className="h-6 w-6" />
-                <div className="">
-                  <p className="font-bold text-sm">Digital Illustration</p>
-                  <p className="text-xs text-gray-400">
-                    May 2,2022 from 8am to 10am
+                    Feb 07,2023 from 8am to 10am
                   </p>
                 </div>
                 <FolderOpenIcon className="h-6 w-6" />

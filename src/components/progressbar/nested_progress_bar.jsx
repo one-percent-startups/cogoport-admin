@@ -22,10 +22,10 @@ export default function NestedProgressBar() {
           <ProgressBar
             radius={44}
             className="second-circle"
-            progress={78}
+            progress={50}
             strokeWidth={8}
             trackStrokeWidth={8}
-            strokeColor="#184477"
+            strokeColor="#09678C"
             pointerRadius={3}
             pointerStrokeWidth={0}
             pointerStrokeColor="#7bcd5c"
@@ -38,7 +38,7 @@ export default function NestedProgressBar() {
               <ProgressBar
                 radius={25}
                 className="third-circle"
-                progress={30}
+                progress={75}
                 strokeColor="#d84639"
                 strokeWidth={8}
                 trackStrokeWidth={8}

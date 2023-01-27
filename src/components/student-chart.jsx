@@ -57,13 +57,13 @@ export default function StudentCharts() {
   const [price, setPrice] = useState(6.2);
   const [date, setDate] = useState(1624147200);
   const [status, setStatus] = useState('Rank');
-  const [chartData, setChartData] = useState(yearlyComparison);
+  const [chartData, setChartData] = useState(monthlyComparison);
 
   const handleOnChange = (value) => {
     setStatus(value);
     switch (value) {
       case 'Rank':
-        setChartData(weeklyComparison);
+        setChartData(monthlyComparison);
         break;
       case 'Points':
         setChartData(monthlyComparison);
@@ -76,15 +76,18 @@ export default function StudentCharts() {
 
   const getLineChart = () => {
     const data = [
-      { x: 1, y: 23, z: 122 },
-      { x: 2, y: 3, z: 73 },
-      { x: 3, y: 15, z: 32 },
-      { x: 4, y: 35, z: 23 },
-      { x: 5, y: 45, z: 20 },
-      { x: 6, y: 25, z: 29 },
-      { x: 7, y: 17, z: 61 },
-      { x: 8, y: 32, z: 45 },
-      { x: 9, y: 43, z: 93 },
+      { label: 'Day 1', 'Expected Point': 23, 'Obtain Point': 122 },
+      { label: 'Day 2', 'Expected Point': 3, 'Obtain Point': 73 },
+      { label: 'Day 3', 'Expected Point': 15, 'Obtain Point': 32 },
+      { label: 'Day 4', 'Expected Point': 35, 'Obtain Point': 23 },
+      { label: 'Day 5', 'Expected Point': 45, 'Obtain Point': 20 },
+      { label: 'Day 6', 'Expected Point': 25, 'Obtain Point': 29 },
+      { label: 'Day 7', 'Expected Point': 17, 'Obtain Point': 61 },
+      { label: 'Day 8', 'Expected Point': 32, 'Obtain Point': 45 },
+      { label: 'Day 9', 'Expected Point': 43, 'Obtain Point': 93 },
+      { label: 'Day 10', 'Expected Point': 43, 'Obtain Point': 93 },
+      { label: 'Day 11', 'Expected Point': 43, 'Obtain Point': 93 },
+      { label: 'Day 12', 'Expected Point': 43, 'Obtain Point': 93 },
     ];
 
     return (
@@ -107,7 +110,7 @@ export default function StudentCharts() {
         </defs>
         <Line
           type={'monotone'}
-          dataKey="y"
+          dataKey="Expected Point"
           stroke="#3A63E0"
           strokeWidth={4}
           fill="url(#liquidity-gradient)"
@@ -119,8 +122,8 @@ export default function StudentCharts() {
         />
         <Line
           type={'monotone'}
-          dataKey="z"
-          stroke="red"
+          dataKey="Obtain Point"
+          stroke="green"
           strokeWidth={4}
           fill="url(#liquidity-gradient)"
           activeDot={{
@@ -130,7 +133,7 @@ export default function StudentCharts() {
           }}
         />
         <XAxis
-          dataKey="x"
+          dataKey="label"
           tick={<CustomAxis />}
           axisLine={false}
           tickLine={false}
@@ -166,11 +169,11 @@ export default function StudentCharts() {
           left: 25,
           bottom: 5,
         }}
-        onMouseMove={(data) => {
-          if (data.isTooltipActive) {
-            setDate(data.activePayload && data.activePayload[0].payload.date);
-          }
-        }}
+        // onMouseMove={(data) => {
+        //   if (data.isTooltipActive) {
+        //     setDate(data.activePayload && data.activePayload[0].payload.date);
+        //   }
+        // }}
       >
         <defs>
           <linearGradient id="liquidity-gradient" x1="0" y1="0" x2="0" y2="1">
@@ -185,15 +188,15 @@ export default function StudentCharts() {
           tickLine={false}
         />
         <Tooltip
-          content={<></>}
-          cursor={{
-            strokeWidth: 50,
-            stroke: 'rgb(237, 239, 243)',
-          }}
-          wrapperStyle={{
-            boxShadow: '0 0 1px 0px 4px 50px rgba(73, 93, 112, 0.08)',
-            background: 'red',
-          }}
+        // content={<></>}
+        // cursor={{
+        //   strokeWidth: 50,
+        //   stroke: 'rgb(237, 239, 243)',
+        // }}
+        // wrapperStyle={{
+        //   boxShadow: '0 0 1px 0px 4px 50px rgba(73, 93, 112, 0.08)',
+        //   background: 'red',
+        // }}
         />
         <CartesianGrid
           vertical={false}
@@ -202,7 +205,7 @@ export default function StudentCharts() {
         />
         <Area
           type="monotone"
-          dataKey="btc"
+          dataKey="rank"
           stroke="#3A63E0"
           strokeWidth={4}
           fill="url(#liquidity-gradient)"
