@@ -1,13 +1,34 @@
-import { useLayoutEffect, useRef, useState, useEffect } from "react";
-import app_api from "../config/config";
-import { Fragment } from 'react'
-import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon,StarIcon } from '@heroicons/react/20/solid'
+import { useLayoutEffect, useRef, useState, useEffect } from 'react';
+import app_api from '../config/config';
+import { Fragment } from 'react';
+import { Menu, Transition } from '@headlessui/react';
+import { ChevronDownIcon, StarIcon } from '@heroicons/react/20/solid';
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
 }
+
 export default function Leaderboard() {
+  const [user, setUser] = useState({});
+  const [leaderboardd2d, setLeaderboardd2d] = useState([]);
+  const [d2dLoading, setd2dLoading] = useState(true);
+  const [d2dError, setd2dError] = useState(null);
+
+  useEffect(() => {
+    try {
+      setUser(JSON.parse(localStorage.getItem('cogoportAdminKey')).data);
+    } catch {}
+    app_api
+      .get('leaderboard/d2d')
+      .then((res) => {
+        setLeaderboardd2d(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        setd2dError(err);
+      });
+  }, []);
+
   //   const checkbox = useRef();
   //   const [checked, setChecked] = useState(false);
   //   const [indeterminate, setIndeterminate] = useState(false);
@@ -45,9 +66,7 @@ export default function Leaderboard() {
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div className="flex flex-row justify-between px-5 py-3">
           <div>
-            <h2 className="text-black font-bold text-lg ">
-              Leaderboard
-            </h2>
+            <h2 className="text-black font-bold text-lg ">Leaderboard</h2>
           </div>
           <div className="">
             <Menu as="div" className="relative inline-block text-left">
@@ -78,9 +97,9 @@ export default function Leaderboard() {
                           href="#"
                           className={classNames(
                             active
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-700",
-                            "block px-4 py-2 text-sm"
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block px-4 py-2 text-sm'
                           )}
                         >
                           Today
@@ -93,9 +112,9 @@ export default function Leaderboard() {
                           href="#"
                           className={classNames(
                             active
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-700",
-                            "block px-4 py-2 text-sm"
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block px-4 py-2 text-sm'
                           )}
                         >
                           Overall
@@ -103,7 +122,6 @@ export default function Leaderboard() {
                       )}
                     </Menu.Item>
                   </div>
-                  
                 </Menu.Items>
               </Transition>
             </Menu>
@@ -124,27 +142,46 @@ export default function Leaderboard() {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b">
-              <th
-                scope="row"
-                className="px-10 py-4 text-lg flex font-semibold text-black text-black font-medium  whitespace-nowrap"
-              >
-               <StarIcon className="text-yellow-500 w-4 mr-1" />01
-              </th>
-              <td className="px-10 py-4 text-lg font-semibold text-black text-black">
-                Rishabh Mehta
-              </td>
-              <td className="px-10 py-4 text-lg font-semibold text-black text-black">
-                100
-              </td>
-            </tr>
-
-            <tr className="bg-white border-b">
+            {leaderboardd2d.map((d2d, d2dIndx) => (
+              <tr key={d2dIndx} className="bg-white border-b">
+                <th
+                  scope="row"
+                  className="px-10 py-4 text-lg flex font-semibold text-black text-black font-medium  whitespace-nowrap"
+                >
+                  {leaderboardd2d.indexOf(d2d) + 1 === 1 ? (
+                    <>
+                      <StarIcon className="text-yellow-500 w-4 mr-1" />{' '}
+                      {leaderboardd2d.indexOf(d2d) + 1}{' '}
+                    </>
+                  ) : leaderboardd2d.indexOf(d2d) + 1 === 2 ? (
+                    <>
+                      {' '}
+                      <StarIcon className="text-gray-500 w-4 mr-1" />
+                      {leaderboardd2d.indexOf(d2d) + 1}{' '}
+                    </>
+                  ) : (
+                    <>
+                      {' '}
+                      <StarIcon className="text-amber-900 w-4 mr-1" />{' '}
+                      {leaderboardd2d.indexOf(d2d) + 1}{' '}
+                    </>
+                  )}
+                </th>
+                <td className="px-10 py-4 text-lg font-semibold text-black text-black">
+                  {d2d.user.fullName}
+                </td>
+                <td className="px-10 py-4 text-lg font-semibold text-black text-black">
+                  {d2d.totalPoints}
+                </td>
+              </tr>
+            ))}
+            {/* <tr className="bg-white border-b">
               <th
                 scope="row"
                 className="px-10 flex py-4 text-lg font-semibold text-black text-black font-medium  whitespace-nowrap"
               >
-                <StarIcon className="text-gray-500 w-4 mr-1" />02
+                <StarIcon className="text-gray-500 w-4 mr-1" />
+                02
               </th>
               <td className="px-10 py-4 text-lg font-semibold text-black text-black">
                 Prabjyot Sudan
@@ -159,7 +196,7 @@ export default function Leaderboard() {
                 scope="row"
                 className="px-10 py-4 flex text-lg font-semibold text-black text-black font-medium  whitespace-nowrap"
               >
-               <StarIcon className="text-amber-900 w-4 mr-1" /> 03
+                <StarIcon className="text-amber-900 w-4 mr-1" /> 03
               </th>
               <td className="px-10 py-4 text-lg font-semibold text-black text-black">
                 Utkarsh Mehta
@@ -167,7 +204,7 @@ export default function Leaderboard() {
               <td className="px-10 py-4 text-lg font-semibold text-black text-black">
                 100
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>

@@ -48,21 +48,21 @@ const NavBar = () => {
 
       <aside
         id="default-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r"
+        className="fixed top-0 left-0 pr-0 z-40 w-64 h-full overflow-y-auto transition-transform -translate-x-full sm:translate-x-0 border-r"
         aria-label="Sidebar"
       >
-        <div className="h-full pl-3 py-4 overflow-y-auto bg-gray-50">
-          <div className="mb-8">
-            <img src={logo} className="w-3/4" />
+        
+          <div className="my-7">
+            <img src={logo} className="w-[64%] pl-[28px]" />
           </div>
-          <div className="flex flex-col justify-between space-y-1 px-2 pb-4 h-full">
+          <div className="flex flex-col justify-between space-y-1 px-2 pb-4 h-[90vh]">
             <ul className="space-y-2">
               <li>
                 <a
                   href="dashboard"
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-sky-100 focus:bg-sky-100"
                 >
-                  <span className="ml-3 text-md">Dashboard</span>
+                  <span className="ml-3 text-md font-medium">Dashboard</span>
                 </a>
               </li>
               <li>
@@ -70,7 +70,7 @@ const NavBar = () => {
                   href="/studentlist"
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-sky-100 focus:bg-sky-100"
                 >
-                  <span className="flex-1 ml-3 whitespace-nowrap text-md">
+                  <span className="flex-1 ml-3 whitespace-nowrap text-md font-medium">
                     Student List
                   </span>
                 </a>
@@ -80,7 +80,7 @@ const NavBar = () => {
                   href="#"
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-sky-100"
                 >
-                  <span className="flex-1 ml-3 whitespace-nowrap text-md">
+                  <span className="flex-1 ml-3 whitespace-nowrap text-md font-medium">
                     Curiculum
                   </span>
                 </a>
@@ -105,7 +105,7 @@ const NavBar = () => {
               </div>
             </div>
           </div>
-        </div>
+     
       </aside>
     </>
   );
