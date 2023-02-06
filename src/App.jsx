@@ -6,18 +6,21 @@ import Dashboard from './pages/dashboard';
 import StudentList from './pages/studentlist';
 import Logout from './components/auth/logout';
 import StudentDashboard from './pages/student_dashboard';
+import NavBar from './components/navigation';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Auth />} />
       <Route path="logout" element={<Logout />} />
-      <Route path="student" element={<StudentDashboard />} />
-
+      
       <Route element={<ProtectedRoutes />}>
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="studentlist" element={<StudentList />} />
-      </Route>
+        {/* <Route path="" element={<NavBar />}> */}
+        <Route path="student/:studentid" element={<StudentDashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="studentlist" element={<StudentList />} />
+        </Route>
+      {/* </Route> */}
     </Routes>
   );
 }

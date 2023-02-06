@@ -1,8 +1,25 @@
+import React, { useState, useEffect } from 'react';
 import { CheckCircleIcon, FolderOpenIcon } from '@heroicons/react/24/outline';
 import classNames from '../../utils/classname';
 import Avatar from '../avatar';
+import avatar4 from '../../assets/images/avatar4.jpeg';
+import app_api from '../../config/config';
 
 export default function Sidebar({ className }) {
+  const [batch, setBatch] = useState([]);
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    try {
+      setUser(JSON.parse(localStorage.getItem('cogoportAdminKey')).data);
+    } catch {}
+    app_api
+      .get('batch/1')
+      .then((res) => {
+        setBatch(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch((err) => {});
+  }, []);
   return (
     <aside
       className={classNames(
@@ -12,35 +29,26 @@ export default function Sidebar({ className }) {
     >
       <div className=" pb-5 ">
         <div className="mx-5 flex h-full flex-col justify-center rounded-lg  bg-transparent sm:mx-6 xl:my-0 xl:mx-0">
-          <div className="ml-4">
-            <span className="font-semibold">Profile</span>
-          </div>
-          <Avatar
-            image={
-              'https://img.freepik.com/free-vector/illustration-web-design_53876-5835.jpg?w=740&t=st=1674844562~exp=1674845162~hmac=b58988180586fec271791eb3e945363ec9b438b4a8166615ffb772b889d03568'
-            }
-            alt="B1"
-            className="mx-auto mb-3"
-            size="lg"
-          />
-
-          <h3 className="mb-2 text-center text-sm uppercase tracking-wider text-gray-500  3xl:mb-3">
-            Batch 1
-          </h3>
+          <h2 className="text-black text-lg font-semibold pl-2">Profile</h2>
+          <img src={avatar4} className="w-40 rounded-full mx-auto mt-6" />
+          <p className="font-semibold text-xl text-center mt-3">
+            {user?.fullName}
+          </p>
+          <p className=" text-md text-center">{user?.email}</p>
           <div class="mt-6 grid grid-cols-3 gap-6 text-center lg:text-left bg-card-gray p-2 m-2 rounded-lg">
             <div className="text-center">
               <p class="text-xs font-semibold text-gray-500">Exercise</p>
-              <p class="font-bold text-zinc-700">45</p>
+              <p class="font-bold text-zinc-700">{batch?.completedExercise}</p>
             </div>
 
             <div className="text-center">
               <p class="text-xs font-semibold text-gray-500">Problem</p>
-              <p class="font-bold text-zinc-700">30</p>
+              <p class="font-bold text-zinc-700">{batch?.completedProblemSets}</p>
             </div>
 
             <div className="text-center">
               <p class="text-xs font-semibold text-gray-500">Project</p>
-              <p class="font-bold text-zinc-700">07</p>
+              <p class="font-bold text-zinc-700">{batch?.completedProjects}</p>
             </div>
           </div>
           <div className="h-screen overflow-y-scroll">

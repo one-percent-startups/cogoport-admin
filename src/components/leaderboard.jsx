@@ -2,7 +2,12 @@ import { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import app_api from '../config/config';
 import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon, StarIcon } from '@heroicons/react/20/solid';
+import {
+  ChevronUpIcon,
+  ChevronDownIcon,
+  StarIcon,
+  MinusCircleIcon,
+} from '@heroicons/react/20/solid';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -13,13 +18,18 @@ export default function Leaderboard() {
   const [leaderboardd2d, setLeaderboardd2d] = useState([]);
   const [d2dLoading, setd2dLoading] = useState(true);
   const [d2dError, setd2dError] = useState(null);
+  const [selectdate, setSelectDate] = useState('d2d');
 
   useEffect(() => {
     try {
       setUser(JSON.parse(localStorage.getItem('cogoportAdminKey')).data);
     } catch {}
+  }, []);
+
+  useEffect(() => {
     app_api
-      .get('leaderboard/d2d')
+      .get(`leaderboard/${selectdate}`)
+      // .get('leaderboard/d2d')
       .then((res) => {
         setLeaderboardd2d(res.data);
         console.log(res.data);
@@ -27,49 +37,17 @@ export default function Leaderboard() {
       .catch((err) => {
         setd2dError(err);
       });
-  }, []);
-
-  //   const checkbox = useRef();
-  //   const [checked, setChecked] = useState(false);
-  //   const [indeterminate, setIndeterminate] = useState(false);
-  //   const [selectedPeople, setSelectedPeople] = useState([]);
-
-  //   useLayoutEffect(() => {
-  //     const isIndeterminate =
-  //       selectedPeople.length > 0 && selectedPeople.length < studentdata.length;
-  //     setChecked(selectedPeople.length === studentdata.length);
-  //     setIndeterminate(isIndeterminate);
-  //     checkbox.current.indeterminate = isIndeterminate;
-  //   }, [selectedPeople]);
-
-  //   function toggleAll() {
-  //     setSelectedPeople(checked || indeterminate ? [] : studentdata);
-  //     setChecked(!checked && !indeterminate);
-  //     setIndeterminate(false);
-  //   }
-
-  //   const [studentdata, setStudentData] = useState([]);
-  //   useEffect(() => {
-  //     app_api
-  //       .get(`/users/batch/1`)
-  //       .then((res) => {
-  //         setStudentData(res.data);
-  //         console.log(res.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }, []);
+  }, [selectdate]);
 
   return (
     <div className="px-8 sm:px-6 lg:px-1">
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg h-[270px]">
         <div className="flex flex-row justify-between px-5 py-3">
           <div>
             <h2 className="text-black font-bold text-lg ">Leaderboard</h2>
           </div>
           <div className="">
-            <Menu as="div" className="relative inline-block text-left">
+            {/* <Menu as="div" className="relative inline-block text-left">
               <div>
                 <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
                   Select Date
@@ -94,7 +72,8 @@ export default function Leaderboard() {
                     <Menu.Item>
                       {({ active }) => (
                         <a
-                          href="#"
+                          id="today"
+                          onClick={setdateToday}
                           className={classNames(
                             active
                               ? 'bg-gray-100 text-gray-900'
@@ -109,7 +88,8 @@ export default function Leaderboard() {
                     <Menu.Item>
                       {({ active }) => (
                         <a
-                          href="#"
+                          id="all"
+                          onClick={setdateOverall}
                           className={classNames(
                             active
                               ? 'bg-gray-100 text-gray-900'
@@ -124,7 +104,18 @@ export default function Leaderboard() {
                   </div>
                 </Menu.Items>
               </Transition>
-            </Menu>
+            </Menu> */}
+            <select
+              className="border-0 p-2"
+              onChange={(e) => setSelectDate(e.target.value)}
+            >
+              <option value="d2d" className="p-3">
+                Today
+              </option>
+              <option value="all" className="p-3">
+                Overall
+              </option>
+            </select>
           </div>
         </div>
         <table className="w-full text-sm text-left text-gray-500">
@@ -155,56 +146,55 @@ export default function Leaderboard() {
                     </>
                   ) : leaderboardd2d.indexOf(d2d) + 1 === 2 ? (
                     <>
-                      {' '}
-                      <StarIcon className="text-gray-500 w-4 mr-1" />
+                      <StarIcon className="text-gray-400 w-4 mr-1" />
                       {leaderboardd2d.indexOf(d2d) + 1}{' '}
+                    </>
+                  ) : leaderboardd2d.indexOf(d2d) + 1 === 3 ? (
+                    <>
+                      <StarIcon className="text-amber-900 w-4 mr-1" />
+                      {leaderboardd2d.indexOf(d2d) + 1}
                     </>
                   ) : (
                     <>
-                      {' '}
-                      <StarIcon className="text-amber-900 w-4 mr-1" />{' '}
-                      {leaderboardd2d.indexOf(d2d) + 1}{' '}
+                      <p className="mx-auto">
+                        {leaderboardd2d.indexOf(d2d) + 1}
+                      </p>
                     </>
                   )}
+                  
+                  {d2d.yesterday ? (d2d.yesterday != -1 ? (
+                    d2d.yesterday > leaderboardd2d.indexOf(d2d) ? (
+                      <span className="ml-2 text-sm text-green-400 inline-flex items-center">
+                        <ChevronUpIcon className="w-4 " />
+                        {d2d.yesterday - leaderboardd2d.indexOf(d2d)}
+                      </span>
+                    ) : d2d.yesterday < leaderboardd2d.indexOf(d2d) ? (
+                      <span className="ml-2 text-sm text-red-400 inline-flex items-center">
+                        <ChevronDownIcon className="w-4 " />
+                        {d2d.yesterday - leaderboardd2d.indexOf(d2d)}
+                      </span>
+                    ) : leaderboardd2d.indexOf(d2d) ? (
+                      <span className="ml-2 text-sm text-green-400 inline-flex items-center">
+                        <ChevronUpIcon className="w-4 " />
+                        {leaderboardd2d.indexOf(d2d)}
+                      </span>
+                    ) : null
+                  ) : (
+                    <span className="ml-2 text-sm text-gray-300 inline-flex items-center">
+                      <MinusCircleIcon className="bg-grey-500 w-4 ml-auto" />
+                    </span>
+                  )):null}
                 </th>
                 <td className="px-10 py-4 text-lg font-semibold text-black text-black">
+                  <a href={`/student/${leaderboardd2d.indexOf(d2d)}`} className="hover:text-gray-400">
                   {d2d.user.fullName}
+                  </a>
                 </td>
                 <td className="px-10 py-4 text-lg font-semibold text-black text-black">
                   {d2d.totalPoints}
                 </td>
               </tr>
             ))}
-            {/* <tr className="bg-white border-b">
-              <th
-                scope="row"
-                className="px-10 flex py-4 text-lg font-semibold text-black text-black font-medium  whitespace-nowrap"
-              >
-                <StarIcon className="text-gray-500 w-4 mr-1" />
-                02
-              </th>
-              <td className="px-10 py-4 text-lg font-semibold text-black text-black">
-                Prabjyot Sudan
-              </td>
-              <td className="px-10 py-4 text-lg font-semibold text-black text-black">
-                100
-              </td>
-            </tr>
-
-            <tr className="bg-white border-b">
-              <th
-                scope="row"
-                className="px-10 py-4 flex text-lg font-semibold text-black text-black font-medium  whitespace-nowrap"
-              >
-                <StarIcon className="text-amber-900 w-4 mr-1" /> 03
-              </th>
-              <td className="px-10 py-4 text-lg font-semibold text-black text-black">
-                Utkarsh Mehta
-              </td>
-              <td className="px-10 py-4 text-lg font-semibold text-black text-black">
-                100
-              </td>
-            </tr> */}
           </tbody>
         </table>
       </div>

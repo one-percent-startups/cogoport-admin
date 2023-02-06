@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import SidebarRight from '../components/sidebar/sidebar-right';
 import StudentCharts from '../components/student-chart';
 import NestedProgressBar from '../components/progressbar/nested_progress_bar';
@@ -9,18 +11,39 @@ import {
   XCircleIcon,
 } from '@heroicons/react/24/outline';
 import Dropdown from '../components/dropdown';
+import moment from 'moment';
 import NavBar from '../components/navigation';
+import app_api from '../config/config';
 
 export default function StudentDashboard() {
+  const [studentinfo, setStudentInfo] = useState([]);
+  const [studentname, setStudentName] = useState([]);
+  const params = useParams();
+  useEffect(() => {
+    app_api
+      .get(`leaderboard/progression/user/${params.studentid}`)
+      .then((res) => {
+        setStudentInfo(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {});
+    app_api.get('users/me').then((res) => {
+      setStudentName(res.data);
+      console.log(res.data);
+    });
+  }, []);
+  // console.log(studentname[params.studentid].fullName);
   return (
     <div>
-      <div className="xl:pr-72 xl:pl-64 2xl:px-8 py-4">
+      <div className=" py-4">
         <NavBar />
-        <main className="">
-          <div className="px-6">
-            <h1 className="font-bold text-lg">Welcome back, Prem!</h1>
-            <span className="text-gray-400 text-sm font-medium">
-              Jan 28, Saturday
+        <main className="ml-[16em] mr-[23em]">
+          <div className="p-4">
+            <h1 className="font-bold text-2xl mb-2">
+              {studentname[params.studentid]}
+            </h1>
+            <span className="text-gray-400 text-lg font-medium">
+              {moment().format('MMMM DD, dddd')}
             </span>
           </div>
           <StudentCharts />

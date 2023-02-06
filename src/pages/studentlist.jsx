@@ -1,72 +1,37 @@
-import React, { useEffect, useState } from "react";
-import NavBar from "../components/navigation";
-import Table from "../components/table";
-import app_api from "../config/config";
-import { Sample } from '../assets/sample'
-import avatar4 from '../assets/images/avatar4.jpeg'
+import React, { useEffect, useState } from 'react';
+import NavBar from '../components/navigation';
+import Table from '../components/table';
+import app_api from '../config/config';
+import { Sample } from '../assets/sample';
+import avatar4 from '../assets/images/avatar4.jpeg';
+import SidebarRight from '../components/sidebar/sidebar-right';
 import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
   ArrowRightOnRectangleIcon,
-} from "@heroicons/react/24/outline";
+} from '@heroicons/react/24/outline';
 
 const tabs = [
-  { name: "Batch 1", href: "#", current: true },
-  { name: "Batch 2", href: "#", current: false },
+  { name: 'Batch 1', href: '#', current: true },
+  { name: 'Batch 2', href: '#', current: false },
 ];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 const StudentList = () => {
-
   const onLogout = () => {
-    navigate("/logout");
+    navigate('/logout');
   };
 
   return (
     <div className="mb-20">
       <NavBar />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 p-4 sm:ml-64">
-        <div className="flex justify-between px-5">
-          <div className="flex items-center w-5/12">
-            <label for="search-courses" className="sr-only">
-              Search
-            </label>
-            <div className="relative w-full">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <MagnifyingGlassIcon className="h-5 w-6 text-gray-400" />
-              </div>
-              <input
-                type="text"
-                id="search-courses"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
-                placeholder="Search"
-                // value={searchStr}
-                // onChange={(e) => setSearchStr(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div className="flex w-4/12 justify-end items-center">
-            <Sample src={avatar4} className="rounded-full mr-1 w-12" />
-            <h3 className="px-2 text-sm mr-3">
-              Rishabh Mehta
-              <br></br>
-              <span className="text-xs text-gray-500">
-                rishabh.mehta@gmail.com
-              </span>
-            </h3>
-            <ArrowRightOnRectangleIcon
-              className="h-6 w-6 text-gray-600 cursor-pointer hover:text-sky-800"
-              onClick={onLogout}
-            />
-          </div>
-        </div>
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-6 py-4 sm:ml-64 mr-[22em]">
         <div className="">
-          <h1 className="my-12 text-4xl font-bold">
-            Student List<span className="text-gray-500 text-sm ml-1  ">10</span>
+          <h1 className="mt-4 mb-12 text-4xl font-bold">
+            Student List
           </h1>
 
           <div className="flex flex-wrap justify-between mb-20 ">
@@ -139,10 +104,10 @@ const StudentList = () => {
           </div>
           <div className="mb-4">
             <h3 className="text-xl font-bold mb-1">Select Batch</h3>
-            <p>Lorem ipsum Lorem ipsum Lorem ipsum</p>
+            
           </div>
           <div className="flex flex-wrap  justify-between ">
-            <div>
+            <div className='w-[200px]'>
               <div className="sm:hidden">
                 <label htmlFor="tabs" className="sr-only">
                   Select a tab
@@ -170,20 +135,20 @@ const StudentList = () => {
                       href={tab.href}
                       className={classNames(
                         tab.current
-                          ? "text-gray-900 bg-gray-900"
-                          : "text-gray-500  hover:text-gray-900 ",
-                        tabIdx === 0 ? "rounded-l-lg" : "",
-                        tabIdx === tabs.length - 1 ? "rounded-r-lg " : "",
-                        "group relative flex-1 overflow-hidden border-black bg-white py-3 px-5 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 focus:bg-black focus:text-white"
+                          ? 'text-gray-900 '
+                          : 'text-gray-500  hover:text-gray-900 ',
+                        tabIdx === 0 ? 'rounded-l-lg' : '',
+                        tabIdx === tabs.length - 1 ? 'rounded-r-lg ' : '',
+                        'group relative flex-1 overflow-hidden border-black bg-white py-3 px-5 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 focus:bg-black focus:text-white'
                       )}
-                      aria-current={tab.current ? "page" : undefined}
+                      aria-current={tab.current ? 'page' : undefined}
                     >
                       <span>{tab.name}</span>
                       <span
                         aria-hidden="true"
                         className={classNames(
-                          tab.current ? "bg-indigo-500" : "bg-transparent",
-                          "absolute inset-x-0 "
+                          tab.current ? 'bg-indigo-500' : 'bg-transparent',
+                          'absolute inset-x-0 '
                         )}
                       />
                     </a>
@@ -234,6 +199,7 @@ const StudentList = () => {
           </div>
         </div>
       </div>
+      <SidebarRight className="right-0 left-auto xl:block" />
     </div>
   );
 };
