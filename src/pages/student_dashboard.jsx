@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
@@ -7,6 +7,7 @@ import {
   CheckCircleIcon,
   ExclamationCircleIcon,
   XCircleIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline';
 import avatar4 from '../assets/images/avatar4.jpeg';
 import classNames from '../utils/classname';
@@ -16,6 +17,7 @@ import NavBar from '../components/navigation';
 import app_api from '../config/config';
 import '../components/progressbar/nested_progress_bar.css';
 import ProgressBar from 'react-customizable-progressbar';
+import { Dialog, Transition } from '@headlessui/react';
 import {
   LineChart,
   Line,
@@ -278,20 +280,23 @@ export default function StudentDashboard() {
   const [coursedetails, setCourseDetails] = useState([]);
   const [totalpoints, setTotalPoints] = useState();
   const [score, setTotalScore] = useState(true);
+  const [userContent, setUserContent] = useState([]);
+  const [selected, setSelected] = useState({});
+
   const params = useParams();
   useEffect(() => {
     app_api
-      .get(`course-content/user-completed/${params.studentid}`)
+      .get(`course-content/user-completed/${params.studentid}/stream`)
       .then((res) => {
         setCourseDetails(res.data);
-        console.log(res.data);
+      })
+      .catch((err) => {
+        setCourseDetails({
+          EXERCISE: { total: 0, completed: 0 },
+          PROBLEM_SET: { total: 0, completed: 0 },
+          PROJECT: { total: 0, completed: 0 },
+        });
       });
-  }, []);
-  useEffect(() => {
-    // app_api.get(`users/${params.studentid}`).then((res) => {
-    //   setStudentName(res.data);
-    //   console.log(res.data);
-    // });
     app_api
       .get('leaderboard/all')
       .then((res) => {
@@ -304,13 +309,24 @@ export default function StudentDashboard() {
       setTotalPoints(res.data);
       console.log(res.data);
     });
+    app_api
+      .get(`course-content/user/${params.studentid}`)
+      .then((res) => {
+        setUserContent(res.data);
+      })
+      .catch((err) => {
+        setUserContent([]);
+      });
   }, []);
+
+  const reportClick = (object) => setSelected(object);
+  const reportClose = () => setSelected({});
 
   return (
     <div>
-      <div className=" py-4">
+      <div className="">
         <NavBar />
-        <main className="ml-[16em] mr-[23em]">
+        <main className="ml-[17em] mr-[19em]">
           <div className="p-4">
             <h1 className="font-bold text-2xl mb-2">Student Dashboard</h1>
             <span className="text-gray-400 text-lg font-medium">
@@ -396,9 +412,7 @@ export default function StudentDashboard() {
                     <div className="h-8 w-[6px] bg-red-600 rounded-md mr-1"></div>
                     <div>
                       <p className="text-sm font-bold">
-                        {coursedetails?.PROJECT?.completed +
-                          '/' +
-                          coursedetails?.PROJECT?.total}
+                        {coursedetails?.PROJECT?.completed}/1
                       </p>
                       <p className="text-[14px] text-gray-600">Projects</p>
                     </div>
@@ -407,7 +421,7 @@ export default function StudentDashboard() {
               </div>
             </div>
           </div>
-          {/* <div className="px-4 sm:px-6 lg:px-8">
+          <div className="px-4 sm:px-6 lg:px-8">
             <div className="mt-8 flex flex-col">
               <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-1">
@@ -417,64 +431,54 @@ export default function StudentDashboard() {
                         <tr>
                           <th
                             scope="col"
-                            className="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
+                            className="min-w-[12rem] py-3.5 px-3 text-left text-sm font-semibold text-gray-900"
                           >
-                            FullName
+                            Title
                           </th>
                           <th
                             scope="col"
                             className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                           >
-                            Github Username
+                            Available
                           </th>
                           <th
                             scope="col"
                             className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                           >
-                            Email
+                            Scored
                           </th>
                           <th
                             scope="col"
                             className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                           >
-                            Role
-                          </th>
-                          <th
-                            scope="col"
-                            className="relative py-3.5 pl-3 pr-4 sm:pr-6"
-                          >
-                            <span className="sr-only">Edit</span>
+                            Action
                           </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200 bg-white">
-                        {studentdata.map((studentlist) => (
-                          <tr key={studentlist.email}>
-                            <td
-                              className={classNames(
-                                'whitespace-nowrap py-4 pr-3 text-sm font-medium'
+                        {userContent.map((u, idx) => (
+                          <tr key={idx}>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              {u?.courseContent?.title}
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              {u?.courseContent?.points}
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              {u?.pointsEarned}
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              {u?.status === 'COMPLETED' ? (
+                                <button
+                                  onClick={() => reportClick(u)}
+                                  className="bg-gray-100 text-black w-full p-1 text-sm rounded-lg hover:bg-gray-200"
+                                >
+                                  Report
+                                </button>
+                              ) : (
+                                'PENDING'
                               )}
-                            >
-                              <a
-                                href={`/student/${studentlist.id}`}
-                                className="hover:text-gray-400"
-                              >
-                                {studentlist.fullName}
-                              </a>
                             </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {studentlist.githubUsername}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {studentlist.email}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                                {studentlist.role}
-                              </span>
-                            </td>
-
-                            
                           </tr>
                         ))}
                       </tbody>
@@ -483,7 +487,7 @@ export default function StudentDashboard() {
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
         </main>
         <SidebarRight className="right-0 left-auto xl:block" />
       </div>
