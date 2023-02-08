@@ -94,7 +94,7 @@ function StudentCharts() {
         setUserPoints(res.data);
       })
       .catch((err) => {});
-  }, []);
+  }, [params.studentid]);
 
   const handleOnChange = (value) => {
     setStatus(value);
@@ -298,13 +298,10 @@ export default function StudentDashboard() {
       .get('leaderboard/all')
       .then((res) => {
         setTotalScore(res.data);
-        console.log(res.data, 'text');
       })
-
       .catch((err) => {});
     app_api.get('points/all/batch/1').then((res) => {
       setTotalPoints(res.data);
-      console.log(res.data);
     });
     app_api
       .get(`course-content/user/${params.studentid}`)
@@ -314,11 +311,10 @@ export default function StudentDashboard() {
       .catch((err) => {
         setUserContent([]);
       });
-      app_api.get(`users/${params.studentid}`).then((res) => {
-        setStudentInfo(res.data);
-        console.log(res.data);
-      });
-  }, []);
+    app_api.get(`users/${params.studentid}`).then((res) => {
+      setStudentInfo(res.data);
+    });
+  }, [params.studentid]);
 
   const reportClick = (object) => {
     if (
@@ -334,37 +330,37 @@ export default function StudentDashboard() {
 
   return (
     <>
-        <div>
-          <div className="">
-            <NavBar />
-            <main className="ml-[17em] mr-[19em] 2xl:mr-[23em]">
-              <div className="p-4">
-                <h1 className="font-bold text-2xl mb-2">Student Dashboard</h1>
-                <span className="text-gray-400 text-lg font-medium">
-                  {moment().format('MMMM DD, dddd')}
-                </span>
+      <div>
+        <div className="">
+          <NavBar />
+          <main className="ml-[17em] mr-[19em] 2xl:mr-[23em]">
+            <div className="p-4">
+              <h1 className="font-bold text-2xl mb-2">Student Dashboard</h1>
+              <span className="text-gray-400 text-lg font-medium">
+                {moment().format('MMMM DD, dddd')}
+              </span>
+            </div>
+            <div className="w-full flex flex-row ">
+              <div className="w-7/12">
+                <StudentCharts />
               </div>
-              <div className="w-full flex flex-row ">
-                <div className="w-7/12">
-                  <StudentCharts />
-                </div>
-                <div className="w-5/12 ml-5">
-                  <h3 className="text-black mb-3 font-bold">
+              <div className="w-5/12 ml-5">
+                <h3 className="text-black mb-3 font-bold">
                   Overall Information
                 </h3>
-                  <div className="flex flex-wrap justify-between w-11/12">
-                    <div className="mb-5 w-6/12">
-                      <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                        Total Score
-                      </h3>
-                      <h2 className="inline-flex text-2xl font-bold">
-                        {totalpoints?._sum?.pointsEarned}
-                      </h2>
-                    </div>
+                <div className="flex flex-wrap justify-between w-11/12">
+                  <div className="mb-5 w-6/12">
+                    <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                      Total Score
+                    </h3>
+                    <h2 className="inline-flex text-2xl font-bold">
+                      {totalpoints?._sum?.pointsEarned}
+                    </h2>
+                  </div>
 
                   <div className="mb-5 w-6/12">
                     <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                     Github Username
+                      Github Username
                     </h3>
                     <h2 className="inline-flex text-2xl font-bold">
                       {studentinfo?.githubUsername}
@@ -580,13 +576,13 @@ function NestedProgressBar() {
   const params = useParams();
   useEffect(() => {
     app_api
-      .get(`course-content/user-completed/${params.studentid}`)
+      .get(`course-content/user-completed/${params.studentid}/stream`)
       .then((res) => {
         setCourseDetails(res.data);
         console.log(res.data);
       });
-    app_api.get((res) => {});
-  }, []);
+  }, [params.studentid]);
+
   function isWhatPercentOf(x, y) {
     return (x / y) * 100;
   }
@@ -670,13 +666,11 @@ function SidebarRight({ className }) {
     } catch {}
     app_api.get(`users/${params.studentid}`).then((res) => {
       setStudentName(res.data);
-      console.log(res.data);
     });
     app_api
       .get(`course-content/user-completed/${params.studentid}/stream`)
       .then((res) => {
         setCourseDetails(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         setCourseDetails({
@@ -692,7 +686,7 @@ function SidebarRight({ className }) {
         console.log(res.data.data);
       })
       .catch((err) => {});
-  }, []);
+  }, [params.studentid]);
 
   // console.log(coursedetails);
   return (
