@@ -60,12 +60,12 @@ const NavBar = () => {
               <li>
                 <a
                   href="dashboard"
-                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-sky-100 focus:bg-sky-100"
+                  className="bg-sky-100 flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-sky-50 focus:bg-sky-100"
                 >
-                  <span className="ml-3 text-md font-medium">Dashboard</span>
+                  <span className="ml-3 text-md font-medium ">Dashboard</span>
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="/studentlist"
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-sky-100 focus:bg-sky-100"
@@ -84,7 +84,7 @@ const NavBar = () => {
                     Curiculum
                   </span>
                 </a>
-              </li>
+              </li> */}
             </ul>
             <div className="p-3 rounded-lg bg-sky-50 text-sky-800">
               <p className="text-sm font-medium mt-3 mb-2">
