@@ -85,8 +85,6 @@ function StudentCharts() {
       .get(`leaderboard/progression/user/${params.studentid}`)
       .then((res) => {
         setStudentInfo(res.data);
-        console.log(params.studentid);
-        console.log(res.data);
       })
       .catch((err) => {});
 
@@ -94,7 +92,6 @@ function StudentCharts() {
       .get(`points/history/user/${params.studentid}`)
       .then((res) => {
         setUserPoints(res.data);
-        console.log(res.data);
       })
       .catch((err) => {});
   }, []);
@@ -103,8 +100,6 @@ function StudentCharts() {
     setStatus(value);
     switch (value) {
       case 'Rank':
-        setChartData(monthlyComparison);
-        break;
       case 'Points':
         setChartData(monthlyComparison);
         break;
@@ -136,7 +131,7 @@ function StudentCharts() {
         <Line
           type={'monotone'}
           dataKey="_count.pointsEarned"
-          name="points earned"
+          name="Points earned"
           stroke="#3A63E0"
           strokeWidth={4}
           fill="url(#liquidity-gradient)"
@@ -159,7 +154,7 @@ function StudentCharts() {
           }}
         /> */}
         <XAxis
-          dataKey="createdAtDate"
+          dataKey="day"
           tick={<CustomAxis />}
           axisLine={false}
           tickLine={false}
@@ -208,8 +203,7 @@ function StudentCharts() {
           </linearGradient>
         </defs>
         <XAxis
-          dataKey="createdAtDate"
-          name="Date"
+          dataKey="day"
           tick={<CustomAxis />}
           axisLine={false}
           tickLine={false}
