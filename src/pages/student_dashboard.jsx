@@ -283,7 +283,7 @@ export default function StudentDashboard() {
   const [score, setTotalScore] = useState(true);
   const [userContent, setUserContent] = useState([]);
   const [selected, setSelected] = useState({});
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const params = useParams();
   useEffect(() => {
@@ -321,237 +321,253 @@ export default function StudentDashboard() {
       });
   }, []);
 
-  const reportClick = (object) => setSelected(object);
+  const reportClick = (object) => {
+    if (
+      object?.courseContent?.type === 'PROBLEM_SET' ||
+      object?.courseContent?.type === 'PROJECT'
+    ) {
+      window.open(object?.finalHTMLLink, '_blank');
+    } else {
+      setSelected(object);
+    }
+  };
   const reportClose = () => setSelected({});
 
   return (
     <>
-    <div>
-      <div className="">
-        <NavBar />
-        <main className="ml-[17em] mr-[19em]">
-          <div className="p-4">
-            <h1 className="font-bold text-2xl mb-2">Student Dashboard</h1>
-            <span className="text-gray-400 text-lg font-medium">
-              {moment().format('MMMM DD, dddd')}
-            </span>
-          </div>
-          <div className="w-full flex flex-row ">
-            <div className="w-7/12">
-              <StudentCharts />
+      <div>
+        <div className="">
+          <NavBar />
+          <main className="ml-[17em] mr-[19em] 2xl:mr-[23em]">
+            <div className="p-4">
+              <h1 className="font-bold text-2xl mb-2">Student Dashboard</h1>
+              <span className="text-gray-400 text-lg font-medium">
+                {moment().format('MMMM DD, dddd')}
+              </span>
             </div>
-            <div className="w-5/12 ml-5">
-              <h3 className="text-black mb-3">Overall Information</h3>
-              <div className="flex flex-wrap justify-between w-11/12">
-                <div className="mb-5 w-6/12">
-                  <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                    Total Score
-                  </h3>
-                  <h2 className="inline-flex text-3xl font-bold">
-                    {totalpoints?._sum?.pointsEarned}
-                  </h2>
-                </div>
+            <div className="w-full flex flex-row ">
+              <div className="w-7/12">
+                <StudentCharts />
+              </div>
+              <div className="w-5/12 ml-5">
+                <h3 className="text-black mb-3">Overall Information</h3>
+                <div className="flex flex-wrap justify-between w-11/12">
+                  <div className="mb-5 w-6/12">
+                    <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                      Total Score
+                    </h3>
+                    <h2 className="inline-flex text-3xl font-bold">
+                      {totalpoints?._sum?.pointsEarned}
+                    </h2>
+                  </div>
 
-                <div className="mb-5 w-6/12">
-                  <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                    Total Student
-                  </h3>
-                  <h2 className="inline-flex text-3xl font-bold">
-                    {score.length}
-                  </h2>
+                  <div className="mb-5 w-6/12">
+                    <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                      Total Student
+                    </h3>
+                    <h2 className="inline-flex text-3xl font-bold">
+                      {score.length}
+                    </h2>
+                  </div>
+                  <div className="mb-5 w-6/12">
+                    <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                      Total Score
+                    </h3>
+                    <h2 className="inline-flex text-3xl font-bold">
+                      {totalpoints?._sum?.pointsEarned}
+                    </h2>
+                  </div>
+                  <div className="mb-5 w-6/12">
+                    <h3 className="text-sm font-semibold text-gray-500 mb-1"></h3>
+                    <h2 className="inline-flex text-3xl font-bold">
+                      {totalpoints?._sum?.pointsEarned}
+                    </h2>
+                  </div>
                 </div>
-                <div className="mb-5 w-6/12">
-                  <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                    Total Score
-                  </h3>
-                  <h2 className="inline-flex text-3xl font-bold">
-                    {totalpoints?._sum?.pointsEarned}
-                  </h2>
+                <div className="max-w-1/2 w-full flex-col">
+                  <div className="flex justify-between mr-5">
+                    <p className="font-bold">My Progress</p>
+                    {/* <Dropdown initialLable="Batch" /> */}
+                  </div>
                 </div>
-                <div className="mb-5 w-6/12">
-                  <h3 className="text-sm font-semibold text-gray-500 mb-1"></h3>
-                  <h2 className="inline-flex text-3xl font-bold">
-                    {totalpoints?._sum?.pointsEarned}
-                  </h2>
-                </div>
-              </div>
-              <div className="max-w-1/2 w-full flex-col">
-                <div className="flex justify-between mr-5">
-                  <p className="font-bold">My Progress</p>
-                  {/* <Dropdown initialLable="Batch" /> */}
-                </div>
-              </div>
-              <div className="flex flex-col items-center bg-card-gray-light py-10 mt-4">
-                <NestedProgressBar />
-                {/* <p className="text-gray-400 text-xs mb-4 mt-3">
+                <div className="flex flex-col items-center bg-card-gray-light py-10 mt-4">
+                  <NestedProgressBar />
+                  {/* <p className="text-gray-400 text-xs mb-4 mt-3">
                   Total completed:{' '}
                   <span className="text-black font-bold text-xs">82/120</span>
                 </p> */}
-                <div className="flex mt-4">
-                  <div className="flex items-center ml-6">
-                    <div className="h-8 w-[6px] bg-yellow-600 rounded-md mr-1"></div>
-                    <div>
-                      <p className="text-sm font-bold">
-                        {coursedetails?.EXERCISE?.completed +
-                          '/' +
-                          coursedetails?.EXERCISE?.total}
-                      </p>
-                      <p className="text-[14px] text-gray-600">Exercises</p>
+                  <div className="flex mt-4">
+                    <div className="flex items-center ml-6">
+                      <div className="h-8 w-[6px] bg-yellow-600 rounded-md mr-1"></div>
+                      <div>
+                        <p className="text-sm font-bold">
+                          {coursedetails?.EXERCISE?.completed +
+                            '/' +
+                            coursedetails?.EXERCISE?.total}
+                        </p>
+                        <p className="text-[14px] text-gray-600">Exercises</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center ml-6">
-                    <div className="h-8 w-[6px] bg-primary rounded-md mr-1"></div>
-                    <div>
-                      <p className="text-sm font-bold">
-                        {coursedetails?.PROBLEM_SET?.completed +
-                          '/' +
-                          coursedetails?.PROBLEM_SET?.total}
-                      </p>
-                      <p className="text-[14px] text-gray-600">Problem Set</p>
+                    <div className="flex items-center ml-6">
+                      <div className="h-8 w-[6px] bg-primary rounded-md mr-1"></div>
+                      <div>
+                        <p className="text-sm font-bold">
+                          {coursedetails?.PROBLEM_SET?.completed +
+                            '/' +
+                            coursedetails?.PROBLEM_SET?.total}
+                        </p>
+                        <p className="text-[14px] text-gray-600">Problem Set</p>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="flex items-center ml-6">
-                    <div className="h-8 w-[6px] bg-red-600 rounded-md mr-1"></div>
-                    <div>
-                      <p className="text-sm font-bold">
-                        {coursedetails?.PROJECT?.completed}/1
-                      </p>
-                      <p className="text-[14px] text-gray-600">Projects</p>
+                    <div className="flex items-center ml-6">
+                      <div className="h-8 w-[6px] bg-red-600 rounded-md mr-1"></div>
+                      <div>
+                        <p className="text-sm font-bold">1/1</p>
+                        <p className="text-[14px] text-gray-600">Projects</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="px-4 sm:px-6 lg:px-8">
-            <div className="mt-8 flex flex-col">
-              <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-1">
-                  <div className="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                    <table className="min-w-full table-fixed divide-y divide-gray-300">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="min-w-[12rem] py-3.5 px-3 text-left text-sm font-semibold text-gray-900"
-                          >
-                            Title
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                          >
-                            Available
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                          >
-                            Scored
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                          >
-                            Action
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-200 bg-white">
-                        {userContent.map((u, idx) => (
-                          <tr key={idx}>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {u?.courseContent?.title}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {u?.courseContent?.points}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {u?.pointsEarned}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {u?.status === 'COMPLETED' ? (
-                                <button
-                                  onClick={() => setOpen(true)}
-                                  className="bg-gray-100 text-black w-full p-1 text-sm rounded-lg hover:bg-gray-200"
-                                >
-                                  Report
-                                </button>
-                              ) : (
-                                'PENDING'
-                              )}
-                            </td>
+            <div className="px-4 sm:px-6 lg:px-8">
+              <div className="mt-8 flex flex-col">
+                <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                  <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-1">
+                    <div className="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                      <table className="min-w-full table-fixed divide-y divide-gray-300">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th
+                              scope="col"
+                              className="min-w-[12rem] py-3.5 px-3 text-left text-sm font-semibold text-gray-900"
+                            >
+                              Title
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                            >
+                              Available
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                            >
+                              Scored
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                            >
+                              Action
+                            </th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 bg-white">
+                          {userContent.map((u, idx) => (
+                            <tr key={idx}>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {u?.courseContent?.title}
+                              </td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {u?.courseContent?.points}
+                              </td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {u?.pointsEarned}
+                              </td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {[
+                                  'EXERCISE',
+                                  'PROBLEM_SET',
+                                  'PROJECT',
+                                ].includes(u?.courseContent?.type) && (
+                                  <button
+                                    onClick={() => reportClick(u)}
+                                    className="bg-gray-100 text-black w-full p-1 text-sm rounded-lg hover:bg-gray-200"
+                                  >
+                                    Report
+                                  </button>
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </main>
-        <SidebarRight className="right-0 left-auto xl:block" />
+          </main>
+          <SidebarRight className="right-0 left-auto xl:block" />
+        </div>
       </div>
-      
-    </div>
-    <Transition.Root show={open} as={Fragment} >
-      <Dialog as="div" className="relative z-[99]" onClose={setOpen}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-        </Transition.Child>
+      <Transition.Root show={Object.keys(selected).length > 0} as={Fragment}>
+        <Dialog as="div" className="relative z-[99]" onClose={reportClose}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </Transition.Child>
 
-        <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
-                <div>
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                    <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
-                  </div>
-                  <div className="mt-3 text-center sm:mt-5">
-                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                      Payment successful
-                    </Dialog.Title>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
-                      </p>
+          <div className="fixed inset-0 z-10 overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                  <div>
+                    <div className="">
+                      <label>
+                        Code{' '}
+                        <span
+                          className={classNames(
+                            'p-0.5 px-1.5 rounded-full text-xs',
+                            selected?.status === 'PENDING'
+                              ? 'text-red-700 bg-red-200'
+                              : 'text-green-700 bg-green-200'
+                          )}
+                        >
+                          {selected?.status}
+                        </span>
+                      </label>
+                      <textarea
+                        className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none disabled:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm min-h-[400px]"
+                        type="text"
+                        disabled
+                        value={selected?.code}
+                      />
                     </div>
                   </div>
-                </div>
-                <div className="mt-5 sm:mt-6">
-                  <button
-                    type="button"
-                    className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
-                    onClick={() => setOpen(false)}
-                  >
-                    Go back to dashboard
-                  </button>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
+                  <div className="mt-5 sm:mt-6">
+                    <button
+                      type="button"
+                      className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
+                      onClick={reportClose}
+                    >
+                      Close
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
           </div>
-        </div>
-      </Dialog>
-    </Transition.Root>
+        </Dialog>
+      </Transition.Root>
     </>
   );
 }
@@ -667,7 +683,7 @@ function SidebarRight({ className, coursedetails }) {
   return (
     <aside
       className={classNames(
-        'top-0 z-20 h-full w-full max-w-full border border-slate-100 bg-sidebar-body  left-0 border-r xs:w-full xl:fixed xl:w-72 xl:pt-6 2xl:w-[350px]',
+        'top-0 z-20 h-full w-full max-w-full border border-slate-100 bg-sidebar-body left-0 border-r xs:w-full xl:fixed xl:w-72 xl:pt-6 2xl:w-[350px]',
         className
       )}
     >
@@ -715,10 +731,8 @@ function SidebarRight({ className, coursedetails }) {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </aside>
   );
 }
-
