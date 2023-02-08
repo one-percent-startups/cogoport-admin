@@ -41,70 +41,12 @@ export default function Leaderboard() {
 
   return (
     <div className="px-8 sm:px-6 lg:px-1">
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg h-[270px]">
-        <div className="flex flex-row justify-between px-5 py-3">
+    <div className="flex flex-row justify-between px-5 py-3">
           <div>
             <h2 className="text-black font-bold text-lg ">Leaderboard</h2>
           </div>
           <div className="">
-            {/* <Menu as="div" className="relative inline-block text-left">
-              <div>
-                <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-                  Select Date
-                  <ChevronDownIcon
-                    className="-mr-1 ml-2 h-5 w-5"
-                    aria-hidden="true"
-                  />
-                </Menu.Button>
-              </div>
-
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
-                <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <div className="py-1">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          id="today"
-                          onClick={setdateToday}
-                          className={classNames(
-                            active
-                              ? 'bg-gray-100 text-gray-900'
-                              : 'text-gray-700',
-                            'block px-4 py-2 text-sm'
-                          )}
-                        >
-                          Today
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          id="all"
-                          onClick={setdateOverall}
-                          className={classNames(
-                            active
-                              ? 'bg-gray-100 text-gray-900'
-                              : 'text-gray-700',
-                            'block px-4 py-2 text-sm'
-                          )}
-                        >
-                          Overall
-                        </a>
-                      )}
-                    </Menu.Item>
-                  </div>
-                </Menu.Items>
-              </Transition>
-            </Menu> */}
+          
             <select
               className="border-0 p-2"
               onChange={(e) => setSelectDate(e.target.value)}
@@ -118,7 +60,9 @@ export default function Leaderboard() {
             </select>
           </div>
         </div>
-        <table className="w-full text-sm text-left text-gray-500">
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg h-[270px]">
+        
+        <table className="w-full  text-sm text-left text-gray-500">
           <thead className="text-xs text-gray-400 uppercase bg-gray-50">
             <tr>
               <th scope="col" className=" px-10 py-3">

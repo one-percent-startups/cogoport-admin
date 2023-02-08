@@ -318,35 +318,49 @@ export default function StudentDashboard() {
             </span>
           </div>
           <div className="w-full flex flex-row ">
-            <div className="w-9/12">
+            <div className="w-7/12">
               <StudentCharts />
             </div>
-            <div className="3/12 ml-5">
-              <h3 className="text-gray-400 mb-3">Overall Information</h3>
-              <div className="mb-5">
-                <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                  Total Score
-                </h3>
-                <h2 className="inline-flex text-3xl font-bold">
-                  {totalpoints?._sum?.pointsEarned}
-                </h2>
-              </div>
+            <div className="w-5/12 ml-5">
+              <h3 className="text-black mb-3">Overall Information</h3>
+              <div className="flex flex-wrap justify-between w-11/12">
+                <div className="mb-5 w-6/12">
+                  <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                    Total Score
+                  </h3>
+                  <h2 className="inline-flex text-3xl font-bold">
+                    {totalpoints?._sum?.pointsEarned}
+                  </h2>
+                </div>
 
-              <div className="mb-5">
-                <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                  Total Student
-                </h3>
-                <h2 className="inline-flex text-3xl font-bold">
-                  {score.length}
-                </h2>
+                <div className="mb-5 w-6/12">
+                  <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                    Total Student
+                  </h3>
+                  <h2 className="inline-flex text-3xl font-bold">
+                    {score.length}
+                  </h2>
+                </div>
+                <div className="mb-5 w-6/12">
+                  <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                    Total Score
+                  </h3>
+                  <h2 className="inline-flex text-3xl font-bold">
+                    {totalpoints?._sum?.pointsEarned}
+                  </h2>
+                </div>
+                <div className="mb-5 w-6/12">
+                  <h3 className="text-sm font-semibold text-gray-500 mb-1"></h3>
+                  <h2 className="inline-flex text-3xl font-bold">
+                    {totalpoints?._sum?.pointsEarned}
+                  </h2>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="m-4 flex">
-            <div className="max-w-1/2 w-full flex-col">
-              <div className="flex justify-between mr-5">
-                <p className="font-bold">My Progress</p>
-                <Dropdown initialLable="Batch" />
+              <div className="max-w-1/2 w-full flex-col">
+                <div className="flex justify-between mr-5">
+                  <p className="font-bold">My Progress</p>
+                  {/* <Dropdown initialLable="Batch" /> */}
+                </div>
               </div>
               <div className="flex flex-col items-center bg-card-gray-light py-10 mt-4">
                 <NestedProgressBar />
@@ -358,102 +372,118 @@ export default function StudentDashboard() {
                   <div className="flex items-center ml-6">
                     <div className="h-8 w-[6px] bg-yellow-600 rounded-md mr-1"></div>
                     <div>
-                      <p className="text-xs font-bold">
+                      <p className="text-sm font-bold">
                         {coursedetails?.EXERCISE?.completed +
                           '/' +
                           coursedetails?.EXERCISE?.total}
                       </p>
-                      <p className="text-[10px] text-gray-600">Exercises</p>
+                      <p className="text-[14px] text-gray-600">Exercises</p>
                     </div>
                   </div>
                   <div className="flex items-center ml-6">
                     <div className="h-8 w-[6px] bg-primary rounded-md mr-1"></div>
                     <div>
-                      <p className="text-xs font-bold">
+                      <p className="text-sm font-bold">
                         {coursedetails?.PROBLEM_SET?.completed +
                           '/' +
                           coursedetails?.PROBLEM_SET?.total}
                       </p>
-                      <p className="text-[10px] text-gray-600">Problem Set</p>
+                      <p className="text-[14px] text-gray-600">Problem Set</p>
                     </div>
                   </div>
 
                   <div className="flex items-center ml-6">
                     <div className="h-8 w-[6px] bg-red-600 rounded-md mr-1"></div>
                     <div>
-                      <p className="text-xs font-bold">
+                      <p className="text-sm font-bold">
                         {coursedetails?.PROJECT?.completed +
                           '/' +
                           coursedetails?.PROJECT?.total}
                       </p>
-                      <p className="text-[10px] text-gray-600">Projects</p>
+                      <p className="text-[14px] text-gray-600">Projects</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+          {/* <div className="px-4 sm:px-6 lg:px-8">
+            <div className="mt-8 flex flex-col">
+              <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-1">
+                  <div className="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <table className="min-w-full table-fixed divide-y divide-gray-300">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th
+                            scope="col"
+                            className="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
+                          >
+                            FullName
+                          </th>
+                          <th
+                            scope="col"
+                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                          >
+                            Github Username
+                          </th>
+                          <th
+                            scope="col"
+                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                          >
+                            Email
+                          </th>
+                          <th
+                            scope="col"
+                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                          >
+                            Role
+                          </th>
+                          <th
+                            scope="col"
+                            className="relative py-3.5 pl-3 pr-4 sm:pr-6"
+                          >
+                            <span className="sr-only">Edit</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-200 bg-white">
+                        {studentdata.map((studentlist) => (
+                          <tr key={studentlist.email}>
+                            <td
+                              className={classNames(
+                                'whitespace-nowrap py-4 pr-3 text-sm font-medium'
+                              )}
+                            >
+                              <a
+                                href={`/student/${studentlist.id}`}
+                                className="hover:text-gray-400"
+                              >
+                                {studentlist.fullName}
+                              </a>
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              {studentlist.githubUsername}
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              {studentlist.email}
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
+                                {studentlist.role}
+                              </span>
+                            </td>
 
-            <div className="max-w-1/2 w-full">
-              <div className="">
-                <div className="flex justify-between mr-5">
-                  <p className="ml-4 font-semibold">Schedule</p>
-                  <Dropdown initialLable="Role" />
-                </div>
-                <div class="mt-4 text-center lg:text-left bg-card-gray-light p-2 m-auto rounded-lg flex justify-center max-w-max items-center shadow-sm pr-4 pl-4 hover:shadow-lg">
-                  <CheckBadgeIcon className="h-6 w-6" fill="#198754" />
-                  <div className="mx-6">
-                    <p className="font-bold text-sm">HTML Forms</p>
-                    <p className="text-[11px] text-green-600 mt-[2px]">
-                      10 Exercises Completed /10
-                    </p>
-                    <p className="text-[10px] text-gray-400 mt-1">
-                      Last Visited 23, Jan 2023
-                    </p>
+                            
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
-                  <ArrowSmallRightIcon className="h-6 w-6" />
-                </div>
-                <div class="mt-4 text-center lg:text-left bg-card-gray-light p-2 m-auto rounded-lg flex justify-center max-w-max items-center shadow-sm pr-4 pl-4 hover:shadow-lg">
-                  <CheckBadgeIcon className="h-6 w-6" fill="#198754" />
-                  <div className="mx-6">
-                    <p className="font-bold text-sm">HTML Input</p>
-                    <p className="text-[11px] text-green-600  mt-[2px]">
-                      09 Exercises Completed /10
-                    </p>
-                    <p className="text-[10px] text-gray-400 mt-1">
-                      Last Visited 23, Jan 2023
-                    </p>
-                  </div>
-                  <ArrowSmallRightIcon className="h-6 w-6" />
-                </div>
-                <div class="mt-4 text-center lg:text-left bg-card-gray-light p-2 m-auto rounded-lg flex justify-center max-w-max items-center shadow-sm pr-4 pl-4 hover:shadow-lg">
-                  <ExclamationCircleIcon className="h-6 w-6" fill="red" />
-                  <div className="mx-6">
-                    <p className="font-bold text-sm">HTML Tags</p>
-                    <p className="text-[11px] text-red-600  mt-[2px]">
-                      02 Exercises Completed /10
-                    </p>
-                    <p className="text-[10px] text-gray-400 mt-1">
-                      Last Visited 25, Jan 2023
-                    </p>
-                  </div>
-                  <ArrowSmallRightIcon className="h-6 w-6" />
-                </div>
-                <div class="mt-4 text-center lg:text-left bg-card-gray-light p-2 m-auto rounded-lg flex justify-center max-w-max items-center shadow-sm pr-4 pl-4 hover:shadow-lg">
-                  <CheckBadgeIcon className="h-6 w-6" fill="#198754" />
-                  <div className="mx-6">
-                    <p className="font-bold text-sm">HTML Dynamic Code</p>
-                    <p className="text-[11px] text-green-600 mt-[2px]">
-                      06 Exercises Completed /10
-                    </p>
-                    <p className="text-[10px] text-gray-400 mt-1">
-                      Last Visited 26, Jan 2023
-                    </p>
-                  </div>
-                  <ArrowSmallRightIcon className="h-6 w-6" />
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </main>
         <SidebarRight className="right-0 left-auto xl:block" />
       </div>
@@ -473,20 +503,17 @@ function NestedProgressBar() {
         setCourseDetails(res.data);
         console.log(res.data);
       });
-    app_api. 
-    get((res) => {
-
-    });
+    app_api.get((res) => {});
   }, []);
   function isWhatPercentOf(x, y) {
     return (x / y) * 100;
   }
 
   return (
-    <div className="mainIndicator">
+    <div className="mainIndicator w-12/12">
       <ProgressBar
         className="first-circle"
-        radius={64}
+        radius={100}
         progress={isWhatPercentOf(
           coursedetails?.EXERCISE?.completed,
           coursedetails?.EXERCISE?.total
@@ -504,7 +531,7 @@ function NestedProgressBar() {
       >
         <div className="indicator">
           <ProgressBar
-            radius={44}
+            radius={70}
             className="second-circle"
             progress={isWhatPercentOf(
               coursedetails?.PROBLEM_SET?.completed,
@@ -523,7 +550,7 @@ function NestedProgressBar() {
           >
             <div className="indicator-2">
               <ProgressBar
-                radius={25}
+                radius={40}
                 className="third-circle"
                 progress={isWhatPercentOf(
                   coursedetails?.PROJECT?.completed,
@@ -548,7 +575,7 @@ function NestedProgressBar() {
   );
 }
 
-function SidebarRight({ className,coursedetails}) {
+function SidebarRight({ className, coursedetails }) {
   const [batch, setBatch] = useState([]);
   const [user, setUser] = useState({});
   const [studentname, setStudentName] = useState([]);
@@ -586,11 +613,13 @@ function SidebarRight({ className,coursedetails}) {
           <p className="font-semibold text-xl text-center mt-3">
             {studentname?.fullName}
           </p>
-          <p className=" text-md text-center">Admin </p>
+          <p className=" text-md text-center">Student </p>
           <div class="mt-6 grid grid-cols-3 gap-6 text-center lg:text-left bg-card-gray p-2 m-2 rounded-lg">
             <div className="text-center">
               <p class="text-xs font-semibold text-gray-500">Exercise</p>
-              <p class="font-bold text-zinc-700">{coursedetails?.EXERCISE?.completedExercise}</p>
+              <p class="font-bold text-zinc-700">
+                {coursedetails?.EXERCISE?.completedExercise}
+              </p>
             </div>
 
             <div className="text-center">
