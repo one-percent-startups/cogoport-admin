@@ -37,16 +37,13 @@ const Dashboard = () => {
         console.log(res.data, 'text');
       })
       .catch((err) => {});
-      app_api
+    app_api
       .get('points/all/batch/1')
       .then((res) => {
-      setTotalPoints(res.data);
-      console.log(res.data)
-    })
-      .catch((err) =>{
-
-     
-    });
+        setTotalPoints(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {});
   }, []);
 
   const tabs = [
@@ -60,10 +57,9 @@ const Dashboard = () => {
         <NavBar />
       </div>
       <div className="ml-64">
-        
-      <SidebarRight className="right-0 left-auto xl:block" />
+        <SidebarRight className="right-0 left-auto xl:block" />
       </div>
-      <div className="p-4   h-screen mr-[22em]">
+      <div className="p-4 h-screen mr-72">
         <div className="flex flex-wrap  justify-between">
           <div className="flex flex-wrap w-full justify-between items-center">
             <div className="mb-10 w-6/12">
@@ -98,13 +94,15 @@ const Dashboard = () => {
                       <a
                         key={tab.name}
                         href={tab.href}
-                        style={{backgroundColor:"black"}}
+                        style={{ backgroundColor: 'black' }}
                         className={classNames(
                           tab.current
                             ? 'text-white bg-balck'
                             : 'text-gray-500 hover:text-gray-900 bg-balck',
                           tabIdx === 0 ? 'rounded-l-lg bg-balck' : '',
-                          tabIdx === tabs.length - 1 ? 'rounded-r-lg bg-balck' : '',
+                          tabIdx === tabs.length - 1
+                            ? 'rounded-r-lg bg-balck'
+                            : '',
                           'group relative flex-1 overflow-hidden border-black bg-balck py-3 px-5 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 focus:bg-black focus:text-white '
                         )}
                         aria-current={tab.current ? 'page' : undefined}
@@ -125,7 +123,7 @@ const Dashboard = () => {
             </div>
           </div>
           <Leaderboard className="w-8/12" />
-          
+
           <div className="3/12">
             <h3 className="text-gray-400 mb-3">Overall Information</h3>
             <div className="mb-5">
@@ -136,8 +134,6 @@ const Dashboard = () => {
                 {totalpoints?._sum?.pointsEarned}
               </h2>
             </div>
-
-         
 
             <div className="mb-5">
               <h3 className="text-sm font-semibold text-gray-500 mb-1">
