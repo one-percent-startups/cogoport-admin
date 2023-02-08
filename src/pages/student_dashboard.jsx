@@ -276,7 +276,7 @@ function StudentCharts() {
 }
 
 export default function StudentDashboard() {
-  const [studentinfo, setStudentInfo] = useState([]);
+  // const [studentinfo, setStudentInfo] = useState([]);
   // const [studentname, setStudentName] = useState([]);
   const [coursedetails, setCourseDetails] = useState([]);
   const [totalpoints, setTotalPoints] = useState();
@@ -284,8 +284,9 @@ export default function StudentDashboard() {
   const [userContent, setUserContent] = useState([]);
   const [selected, setSelected] = useState({});
   const [open, setOpen] = useState(false);
-
+  const [studentinfo, setStudentInfo] = useState({});
   const params = useParams();
+
   useEffect(() => {
     app_api
       .get(`course-content/user-completed/${params.studentid}/stream`)
@@ -319,6 +320,10 @@ export default function StudentDashboard() {
       .catch((err) => {
         setUserContent([]);
       });
+      app_api.get(`users/${params.studentid}`).then((res) => {
+        setStudentInfo(res.data);
+        console.log(res.data);
+      });
   }, []);
 
   const reportClick = (object) => {
@@ -335,53 +340,55 @@ export default function StudentDashboard() {
 
   return (
     <>
-      <div>
-        <div className="">
-          <NavBar />
-          <main className="ml-[17em] mr-[19em] 2xl:mr-[23em]">
-            <div className="p-4">
-              <h1 className="font-bold text-2xl mb-2">Student Dashboard</h1>
-              <span className="text-gray-400 text-lg font-medium">
-                {moment().format('MMMM DD, dddd')}
-              </span>
-            </div>
-            <div className="w-full flex flex-row ">
-              <div className="w-7/12">
-                <StudentCharts />
+        <div>
+          <div className="">
+            <NavBar />
+            <main className="ml-[17em] mr-[19em] 2xl:mr-[23em]">
+              <div className="p-4">
+                <h1 className="font-bold text-2xl mb-2">Student Dashboard</h1>
+                <span className="text-gray-400 text-lg font-medium">
+                  {moment().format('MMMM DD, dddd')}
+                </span>
               </div>
-              <div className="w-5/12 ml-5">
-                <h3 className="text-black mb-3">Overall Information</h3>
-                <div className="flex flex-wrap justify-between w-11/12">
-                  <div className="mb-5 w-6/12">
-                    <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                      Total Score
-                    </h3>
-                    <h2 className="inline-flex text-3xl font-bold">
-                      {totalpoints?._sum?.pointsEarned}
-                    </h2>
-                  </div>
+              <div className="w-full flex flex-row ">
+                <div className="w-7/12">
+                  <StudentCharts />
+                </div>
+                <div className="w-5/12 ml-5">
+                  <h3 className="text-black mb-3 font-bold">
+                  Overall Information
+                </h3>
+                  <div className="flex flex-wrap justify-between w-11/12">
+                    <div className="mb-5 w-6/12">
+                      <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                        Total Score
+                      </h3>
+                      <h2 className="inline-flex text-2xl font-bold">
+                        {totalpoints?._sum?.pointsEarned}
+                      </h2>
+                    </div>
 
                   <div className="mb-5 w-6/12">
                     <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                      Total Student
+                     Github Username
                     </h3>
-                    <h2 className="inline-flex text-3xl font-bold">
-                      {score.length}
+                    <h2 className="inline-flex text-2xl font-bold">
+                      {studentinfo?.githubUsername}
                     </h2>
                   </div>
                   <div className="mb-5 w-6/12">
                     <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                      Total Score
+                      Stream
                     </h3>
-                    <h2 className="inline-flex text-3xl font-bold">
-                      {totalpoints?._sum?.pointsEarned}
+                    <h2 className="inline-flex text-2xl font-bold">
+                      {studentinfo?.stream?.name}
                     </h2>
                   </div>
                   <div className="mb-5 w-6/12">
-                    <h3 className="text-sm font-semibold text-gray-500 mb-1"></h3>
-                    <h2 className="inline-flex text-3xl font-bold">
-                      {totalpoints?._sum?.pointsEarned}
-                    </h2>
+                    <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                      Batch
+                    </h3>
+                    <h2 className="inline-flex text-2xl font-bold">Batch 1</h2>
                   </div>
                 </div>
                 <div className="max-w-1/2 w-full flex-col">
@@ -656,11 +663,12 @@ function NestedProgressBar() {
   );
 }
 
-function SidebarRight({ className, coursedetails }) {
+function SidebarRight({ className }) {
   const [batch, setBatch] = useState([]);
   const [user, setUser] = useState({});
   const [studentname, setStudentName] = useState([]);
   const params = useParams();
+  const [coursedetails, setCourseDetails] = useState([]);
 
   useEffect(() => {
     try {
@@ -670,6 +678,19 @@ function SidebarRight({ className, coursedetails }) {
       setStudentName(res.data);
       console.log(res.data);
     });
+    app_api
+      .get(`course-content/user-completed/${params.studentid}/stream`)
+      .then((res) => {
+        setCourseDetails(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        setCourseDetails({
+          EXERCISE: { total: 0, completed: 0 },
+          PROBLEM_SET: { total: 0, completed: 0 },
+          PROJECT: { total: 0, completed: 0 },
+        });
+      });
     app_api
       .get('batch/1')
       .then((res) => {
@@ -699,7 +720,7 @@ function SidebarRight({ className, coursedetails }) {
             <div className="text-center">
               <p class="text-xs font-semibold text-gray-500">Exercise</p>
               <p class="font-bold text-zinc-700">
-                {coursedetails?.EXERCISE?.completedExercise}
+                {coursedetails?.EXERCISE?.completed}
               </p>
             </div>
 
