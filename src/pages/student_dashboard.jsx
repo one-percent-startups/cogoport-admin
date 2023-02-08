@@ -455,7 +455,7 @@ export default function StudentDashboard() {
             </div>
           </div>
         </main>
-        <SidebarRight props={coursedetails} />
+        <SidebarRight className="right-0 left-auto xl:block" />
       </div>
     </div>
   );
