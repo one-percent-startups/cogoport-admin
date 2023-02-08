@@ -16,7 +16,6 @@ function classNames(...classes) {
 
 export default function Table() {
 
-
   const [studentdata, setStudentData] = useState([]);
   useEffect(() => {
     app_api
@@ -36,14 +35,13 @@ export default function Table() {
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-1">
             <div className="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-              
+             
               <table className="min-w-full table-fixed divide-y divide-gray-300">
                 <thead className="bg-gray-50">
                   <tr>
-                    
                     <th
                       scope="col"
-                      className="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900 pl-5"
+                      className="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
                     >
                       FullName
                     </th>
@@ -77,16 +75,16 @@ export default function Table() {
                   {studentdata.map((studentlist) => (
                     <tr
                       key={studentlist.email}
-                      
+                     
                     >
                       
                       <td
                         className={classNames(
-                          "whitespace-nowrap py-4  pl-5 pr-3 text-sm font-medium",
-                          
+                          "whitespace-nowrap py-4 pr-3 text-sm font-medium",
+                         
                         )}
                       >
-                      <a href={`/student/${studentdata.indexOf(studentlist)}`} className="hover:text-gray-400">
+                      <a href={`/student/${studentlist.id}`} className="hover:text-gray-400">
                         {studentlist.fullName}
                         </a>
                       </td>

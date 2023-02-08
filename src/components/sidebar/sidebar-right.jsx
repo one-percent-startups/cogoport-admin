@@ -34,7 +34,7 @@ export default function Sidebar({ className }) {
           <p className="font-semibold text-xl text-center mt-3">
             {user?.fullName}
           </p>
-          <p className=" text-md text-center">{user?.email}</p>
+          <p className=" text-md text-center">Admin </p>
           <div class="mt-6 grid grid-cols-3 gap-6 text-center lg:text-left bg-card-gray p-2 m-2 rounded-lg">
             <div className="text-center">
               <p class="text-xs font-semibold text-gray-500">Exercise</p>
@@ -48,62 +48,23 @@ export default function Sidebar({ className }) {
 
             <div className="text-center">
               <p class="text-xs font-semibold text-gray-500">Project</p>
-              <p class="font-bold text-zinc-700">{batch?.completedProjects}</p>
+              <p class="font-bold text-zinc-700">1</p>
             </div>
           </div>
           <div className="h-screen overflow-y-scroll">
             <p className="font-semibold ml-4 mt-2">Schedule</p>
             <div className="h-full mb-2">
-              <div class="mt-2 text-center lg:text-left bg-white p-2 ml-3 m-auto rounded-lg flex justify-evenly items-center">
+              <div class="mt-2 text-center lg:text-left bg-white p-2 ml-3 m-auto rounded-lg flex justify-start items-center">
                 <CheckCircleIcon className="h-6 w-6" />
-                <div className="">
-                  <p className="font-bold text-sm">HTML and CSS</p>
+                <div className="ml-5">
+                  <p className="font-bold text-sm">Final Project</p>
                   <p className="text-xs text-gray-400">
-                    Jan 30,2023 8am to 10am
+                    Feb 8, 2023 9am to 8pm
                   </p>
                 </div>
-                <FolderOpenIcon className="h-6 w-6" />
+                {/* <FolderOpenIcon className="h-6 w-6" /> */}
               </div>
-              <div class="mt-2 text-center lg:text-left bg-white p-2 ml-3 m-auto rounded-lg flex justify-evenly items-center">
-                <CheckCircleIcon className="h-6 w-6" />
-                <div className="">
-                  <p className="font-bold text-sm">Javascript Basic</p>
-                  <p className="text-xs text-gray-400">
-                    Feb 01,2023 8am to 10am
-                  </p>
-                </div>
-                <FolderOpenIcon className="h-6 w-6" />
-              </div>
-              <div class="mt-2 text-center lg:text-left bg-white p-2 ml-3 m-auto rounded-lg flex justify-evenly items-center">
-                <CheckCircleIcon className="h-6 w-6" />
-                <div className="">
-                  <p className="font-bold text-sm">HTML, CSS and JS</p>
-                  <p className="text-xs text-gray-400">
-                    Feb 02,2023 8am to 10am
-                  </p>
-                </div>
-                <FolderOpenIcon className="h-6 w-6" />
-              </div>
-              <div class="mt-2 text-center lg:text-left bg-white p-2 ml-3 m-auto rounded-lg flex justify-evenly items-center">
-                <CheckCircleIcon className="h-6 w-6" />
-                <div className="">
-                  <p className="font-bold text-sm">Javascript Advance</p>
-                  <p className="text-xs text-gray-400">
-                    Feb 05,2023 8am to 10am
-                  </p>
-                </div>
-                <FolderOpenIcon className="h-6 w-6" />
-              </div>
-              <div class="mt-2 text-center lg:text-left bg-white p-2 ml-3 m-auto rounded-lg flex justify-evenly items-center">
-                <CheckCircleIcon className="h-6 w-6" />
-                <div className="">
-                  <p className="font-bold text-sm">Basic Algorithm</p>
-                  <p className="text-xs text-gray-400">
-                    Feb 07,2023 from 8am to 10am
-                  </p>
-                </div>
-                <FolderOpenIcon className="h-6 w-6" />
-              </div>
+              
             </div>
           </div>
         </div>

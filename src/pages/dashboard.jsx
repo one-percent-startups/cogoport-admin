@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [user, setUser] = useState({});
 
   const [score, setTotalScore] = useState(true);
+  const [totalpoints, setTotalPoints] = useState(true);
   const [d2dError, setd2dError] = useState(null);
 
   useEffect(() => {
@@ -36,6 +37,16 @@ const Dashboard = () => {
         console.log(res.data, 'text');
       })
       .catch((err) => {});
+      app_api
+      .get('points/all/batch/1')
+      .then((res) => {
+      setTotalPoints(res.data);
+      console.log(res.data)
+    })
+      .catch((err) =>{
+
+     
+    });
   }, []);
 
   const tabs = [
@@ -87,13 +98,14 @@ const Dashboard = () => {
                       <a
                         key={tab.name}
                         href={tab.href}
+                        style={{backgroundColor:"black"}}
                         className={classNames(
                           tab.current
-                            ? 'text-gray-900 bg-balck'
-                            : 'text-gray-500 hover:text-gray-900 ',
-                          tabIdx === 0 ? 'rounded-l-lg' : '',
-                          tabIdx === tabs.length - 1 ? 'rounded-r-lg ' : '',
-                          'group relative flex-1 overflow-hidden border-black bg-white py-3 px-5 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 focus:bg-black focus:text-white'
+                            ? 'text-white bg-balck'
+                            : 'text-gray-500 hover:text-gray-900 bg-balck',
+                          tabIdx === 0 ? 'rounded-l-lg bg-balck' : '',
+                          tabIdx === tabs.length - 1 ? 'rounded-r-lg bg-balck' : '',
+                          'group relative flex-1 overflow-hidden border-black bg-balck py-3 px-5 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 focus:bg-black focus:text-white '
                         )}
                         aria-current={tab.current ? 'page' : undefined}
                       >
@@ -113,21 +125,19 @@ const Dashboard = () => {
             </div>
           </div>
           <Leaderboard className="w-8/12" />
+          
           <div className="3/12">
             <h3 className="text-gray-400 mb-3">Overall Information</h3>
             <div className="mb-5">
               <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                Score
+                Total Score
               </h3>
-              <h2 className="inline-flex text-3xl font-bold">{}</h2>
+              <h2 className="inline-flex text-3xl font-bold">
+                {totalpoints?._sum?.pointsEarned}
+              </h2>
             </div>
 
-            <div className="mb-5">
-              <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                Hour Spend
-              </h3>
-              <h2 className="inline-flex text-3xl font-bold">10h</h2>
-            </div>
+         
 
             <div className="mb-5">
               <h3 className="text-sm font-semibold text-gray-500 mb-1">

@@ -186,7 +186,7 @@ export default function Leaderboard() {
                   )):null}
                 </th>
                 <td className="px-10 py-4 text-lg font-semibold text-black text-black">
-                  <a href={`/student/${leaderboardd2d.indexOf(d2d)}`} className="hover:text-gray-400">
+                  <a href={`/student/${d2d.userId}`} className="hover:text-gray-400">
                   {d2d.user.fullName}
                   </a>
                 </td>
