@@ -94,7 +94,7 @@ function StudentCharts() {
         setUserPoints(res.data);
       })
       .catch((err) => {});
-  }, []);
+  }, [params.studentid]);
 
   const handleOnChange = (value) => {
     setStatus(value);
@@ -312,12 +312,10 @@ export default function StudentDashboard() {
       .get('leaderboard/all')
       .then((res) => {
         setTotalScore(res.data);
-        console.log(res.data, 'text');
       })
       .catch((err) => {});
     app_api.get('points/all/batch/1').then((res) => {
       setTotalPoints(res.data);
-      console.log(res.data);
     });
     app_api
       .get(`course-content/user/${params.studentid}`)
@@ -378,6 +376,7 @@ export default function StudentDashboard() {
 
                   <div className="mb-5 w-6/12">
                     <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                      Github Username
                       Github Username
                     </h3>
                     <h2 className="inline-flex text-xl font-bold">
@@ -610,13 +609,13 @@ function NestedProgressBar() {
   const params = useParams();
   useEffect(() => {
     app_api
-      .get(`course-content/user-completed/${params.studentid}`)
+      .get(`course-content/user-completed/${params.studentid}/stream`)
       .then((res) => {
         setCourseDetails(res.data);
         console.log(res.data);
       });
-    app_api.get((res) => {});
-  }, []);
+  }, [params.studentid]);
+
   function isWhatPercentOf(x, y) {
     return (x / y) * 100;
   }
@@ -700,13 +699,11 @@ function SidebarRight({ className }) {
     } catch {}
     app_api.get(`users/${params.studentid}`).then((res) => {
       setStudentName(res.data);
-      console.log(res.data);
     });
     app_api
       .get(`course-content/user-completed/${params.studentid}/stream`)
       .then((res) => {
         setCourseDetails(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         setCourseDetails({
@@ -722,7 +719,7 @@ function SidebarRight({ className }) {
         console.log(res.data.data);
       })
       .catch((err) => {});
-  }, []);
+  }, [params.studentid]);
 
   // console.log(coursedetails);
   return (

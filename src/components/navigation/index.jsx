@@ -59,7 +59,7 @@ const NavBar = () => {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="dashboard"
+                  href="/dashboard"
                   className="bg-sky-100 flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-sky-50 focus:bg-sky-100"
                 >
                   <span className="ml-3 text-md font-medium ">Dashboard</span>
