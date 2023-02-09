@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import Select from 'react-select';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import {
   ArrowSmallRightIcon,
@@ -277,9 +277,15 @@ export default function StudentDashboard() {
   const [score, setTotalScore] = useState(true);
   const [userContent, setUserContent] = useState([]);
   const [selected, setSelected] = useState({});
-  const [open, setOpen] = useState(false);
+  const [categoryoptions, setCategoryoptions] = useState([]);
   const [studentinfo, setStudentInfo] = useState({});
   const params = useParams();
+
+   const options = [
+    {"label":categoryoptions.name, "value":categoryoptions.name}
+  ];
+  
+  const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
     app_api
@@ -294,13 +300,20 @@ export default function StudentDashboard() {
           PROJECT: { total: 0, completed: 0 },
         });
       });
+    app_api.get('course-category').then((res) => {
+      setCategoryoptions(res.data);
+      console.log(res.data);
+    });
+    app_api.get('leaderboard/all').then((res) => {
+      setTotalScore(res.data);
+      console.log(res.data, 'text');
+    });
     app_api
       .get('leaderboard/all')
       .then((res) => {
         setTotalScore(res.data);
         console.log(res.data, 'text');
       })
-
       .catch((err) => {});
     app_api.get('points/all/batch/1').then((res) => {
       setTotalPoints(res.data);
@@ -314,10 +327,10 @@ export default function StudentDashboard() {
       .catch((err) => {
         setUserContent([]);
       });
-      app_api.get(`users/${params.studentid}`).then((res) => {
-        setStudentInfo(res.data);
-        console.log(res.data);
-      });
+    app_api.get(`users/${params.studentid}`).then((res) => {
+      setStudentInfo(res.data);
+      console.log(res.data);
+    });
   }, []);
 
   const reportClick = (object) => {
@@ -330,43 +343,44 @@ export default function StudentDashboard() {
       setSelected(object);
     }
   };
+
   const reportClose = () => setSelected({});
 
   return (
     <>
-        <div>
-          <div className="">
-            <NavBar />
-            <main className="ml-[17em] mr-[19em] 2xl:mr-[23em]">
-              <div className="p-4">
-                <h1 className="font-bold text-2xl mb-2">Student Dashboard</h1>
-                <span className="text-gray-400 text-lg font-medium">
-                  {moment().format('MMMM DD, dddd')}
-                </span>
+      <div>
+        <div className="">
+          <NavBar />
+          <main className="ml-[17em] mr-[19em] 2xl:mr-[23em]">
+            <div className="p-4">
+              <h1 className="font-bold text-2xl mb-2">Student Dashboard</h1>
+              <span className="text-gray-400 text-lg font-medium">
+                {moment().format('MMMM DD, dddd')}
+              </span>
+            </div>
+            <div className="w-full flex flex-row ">
+              <div className="w-7/12">
+                <StudentCharts />
               </div>
-              <div className="w-full flex flex-row ">
-                <div className="w-7/12">
-                  <StudentCharts />
-                </div>
-                <div className="w-5/12 ml-5">
-                  <h3 className="text-black mb-3 font-bold">
+              <div className="w-5/12 ml-5">
+                <h3 className="text-black mb-3 font-bold">
                   Overall Information
                 </h3>
-                  <div className="flex flex-wrap justify-between w-11/12">
-                    <div className="mb-5 w-6/12">
-                      <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                        Total Score
-                      </h3>
-                      <h2 className="inline-flex text-2xl font-bold">
-                        {totalpoints?._sum?.pointsEarned}
-                      </h2>
-                    </div>
+                <div className="flex flex-wrap justify-between w-11/12">
+                  <div className="mb-5 w-6/12">
+                    <h3 className="text-xl font-semibold text-gray-500 mb-1">
+                      Total Score
+                    </h3>
+                    <h2 className="inline-flex text-xl font-bold">
+                      {totalpoints?._sum?.pointsEarned}
+                    </h2>
+                  </div>
 
                   <div className="mb-5 w-6/12">
                     <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                     Github Username
+                      Github Username
                     </h3>
-                    <h2 className="inline-flex text-2xl font-bold">
+                    <h2 className="inline-flex text-xl font-bold">
                       {studentinfo?.githubUsername}
                     </h2>
                   </div>
@@ -374,7 +388,7 @@ export default function StudentDashboard() {
                     <h3 className="text-sm font-semibold text-gray-500 mb-1">
                       Stream
                     </h3>
-                    <h2 className="inline-flex text-2xl font-bold">
+                    <h2 className="inline-flex text-xl font-bold">
                       {studentinfo?.stream?.name}
                     </h2>
                   </div>
@@ -434,6 +448,22 @@ export default function StudentDashboard() {
             </div>
             <div className="px-4 sm:px-6 lg:px-8">
               <div className="mt-8 flex flex-col">
+                <div className="flex flex-row">
+                  <div className="App w-64 mb-6 text-end ml-auto">
+                    <Select
+                      defaultValue={selectedOption}
+                      onChange={setSelectedOption}
+                      options={categoryoptions}
+                    />
+                  </div>
+                  <div className="App w-64 mb-6 text-end ml-auto">
+                    <Select
+                      defaultValue={selectedOption}
+                      onChange={setSelectedOption}
+                      options={options}
+                    />
+                  </div>
+                </div>
                 <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-1">
                     <div className="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
