@@ -274,7 +274,7 @@ export default function StudentDashboard() {
   // const [studentinfo, setStudentInfo] = useState([]);
   // const [studentname, setStudentName] = useState([]);
   const [coursedetails, setCourseDetails] = useState([]);
-  const [totalpoints, setTotalPoints] = useState();
+  const [totalpoints, setTotalPoints] = useState({});
   const [score, setTotalScore] = useState(true);
   const [userContent, setUserContent] = useState([]);
   const [selected, setSelected] = useState({});
@@ -317,7 +317,7 @@ export default function StudentDashboard() {
         setTotalScore(res.data);
       })
       .catch((err) => {});
-    app_api.get('points/all/batch/1').then((res) => {
+    app_api.get(`points/user/${params.studentid}`).then((res) => {
       setTotalPoints(res.data);
     });
     app_api
@@ -387,7 +387,7 @@ export default function StudentDashboard() {
                       Total Score
                     </h3>
                     <h2 className="inline-flex text-xl font-bold">
-                      {totalpoints?._sum?.pointsEarned}
+                      {totalpoints?._count?.pointsEarned}
                     </h2>
                   </div>
 
