@@ -53,13 +53,13 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-row">
-      <div className="">
+      <div className="hidden xs:hidden lg:block md:block">
         <NavBar />
       </div>
-      <div className="ml-64">
+      <div className="">
         <SidebarRight className="right-0 left-auto xl:block" />
       </div>
-      <div className="p-4 h-screen mr-72">
+      <div className="p-4 h-screen xs:ml-[0em] md:ml-[17em] lg:mr-[19em] 2xl:mr-[23em]">
         <div className="flex flex-wrap  justify-between">
           <div className="flex flex-wrap w-full justify-between items-center">
             <div className="mb-10 w-6/12">
@@ -123,8 +123,7 @@ const Dashboard = () => {
             </div>
           </div>
           <Leaderboard className="w-8/12" />
-
-          <div className="3/12">
+          <div className="w-3/12 mt-[30px] 2xl:mt-[10px] mx-auto xl:mx-[0]">
             <h3 className="text-gray-400 mb-3">Overall Information</h3>
             <div className="mb-5">
               <h3 className="text-sm font-semibold text-gray-500 mb-1">

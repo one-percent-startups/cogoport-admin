@@ -362,20 +362,22 @@ export default function StudentDashboard() {
   return (
     <>
       <div>
-        <div className="">
-          <NavBar />
-          <main className="ml-[17em] mr-[19em] 2xl:mr-[23em]">
+        <div >
+         
+         <div className="hidden xs:hidden lg:block md:block"> <NavBar />
+          </div>
+          <main className="xs:ml-[0em] md:ml-[17em] lg:mr-[19em] 2xl:mr-[23em]">
             <div className="p-4">
               <h1 className="font-bold text-2xl mb-2">Student Dashboard</h1>
               <span className="text-gray-400 text-lg font-medium">
                 {moment().format('MMMM DD, dddd')}
               </span>
             </div>
-            <div className="w-full flex flex-row ">
-              <div className="w-7/12">
+            <div className="w-full flex flex-col lg:flex-row">
+              <div className="w-12/12 md:w-12/12 lg:w-7/12 xl:7/12 2xl:7/12">
                 <StudentCharts />
               </div>
-              <div className="w-5/12 ml-5">
+              <div className="w-12/12 ml-5 lg:w-5/12 xl:5/12">
                 <h3 className="text-black mb-3 font-bold">
                   Overall Information
                 </h3>
@@ -821,7 +823,7 @@ function SidebarRight({ className }) {
             </div>
 
             <div className="text-center">
-              <p class="text-xs font-semibold text-gray-500">Problem</p>
+              <p class="text-xs font-semibold text-gray-500">Problem Set</p>
               <p class="font-bold text-zinc-700">
                 {batch?.completedProblemSets}
               </p>

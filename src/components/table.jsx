@@ -51,7 +51,7 @@ export default function Table() {
   };
 
   return (
-    <div className="flex flex-col pb-10">
+    <div className="flex flex-col pb-10 mt-10">
       <Select
         className="self-end w-4/12"
         placeholder="Filter by track"
@@ -63,7 +63,7 @@ export default function Table() {
         onChange={onStreamFilterChange}
       />
       <div className="px-4 sm:px-6 lg:px-8">
-        <div className="mt-8 flex flex-col">
+        <div className="mt-4 flex flex-col">
           <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-1">
               <div className="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">

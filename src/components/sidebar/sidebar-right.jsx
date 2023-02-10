@@ -23,7 +23,7 @@ export default function Sidebar({ className }) {
   return (
     <aside
       className={classNames(
-        'top-0 z-20 h-full w-full max-w-full border border-slate-100 bg-sidebar-body  left-0 border-r xs:w-full xl:fixed xl:w-72 xl:pt-6 2xl:w-[350px]',
+        'top-0 z-20 h-full w-full max-w-full border border-slate-100 bg-sidebar-body  left-0 border-r hidden xs:hidden md:hidden lg:w-[hidden] xl:fixed xl:w-72 xl:pt-6 2xl:w-[350px]',
         className
       )}
     >
@@ -42,7 +42,7 @@ export default function Sidebar({ className }) {
             </div>
 
             <div className="text-center">
-              <p class="text-xs font-semibold text-gray-500">Problem</p>
+              <p class="text-xs font-semibold text-gray-500">Problem Set</p>
               <p class="font-bold text-zinc-700">{batch?.completedProblemSets}</p>
             </div>
 
