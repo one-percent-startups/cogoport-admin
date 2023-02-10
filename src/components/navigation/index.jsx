@@ -64,6 +64,12 @@ const NavBar = () => {
                 >
                   <span className="ml-3 text-md font-medium ">Dashboard</span>
                 </a>
+                <a
+                  href="/logout"
+                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-sky-50 focus:bg-sky-100 mt-2"
+                >
+                  <span className="ml-3 text-md font-medium ">Logout</span>
+                </a>
               </li>
               {/* <li>
                 <a
