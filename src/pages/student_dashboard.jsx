@@ -279,11 +279,13 @@ export default function StudentDashboard() {
   const [userContent, setUserContent] = useState([]);
   const [selected, setSelected] = useState('');
   const [categoryoptions, setCategoryoptions] = useState([]);
+  const [allCourses, setAllCourses] = useState([]);
   const [courseoptions, setCourseOptions] = useState([]);
   const [studentinfo, setStudentInfo] = useState({});
   const params = useParams();
 
-  const [selectedOption, setSelectedOption] = useState('');
+  const [courseFilter, setCourseFilter] = useState(null);
+  const [categoryFilter, setCategoryFilter] = useState(null);
 
   useEffect(() => {
     app_api
@@ -298,17 +300,16 @@ export default function StudentDashboard() {
           PROJECT: { total: 0, completed: 0 },
         });
       });
-    app_api.get(`course-category${selectedOption}`).then((res) => {
+    app_api.get(`course-category`).then((res) => {
       setCategoryoptions(res.data);
-      console.log(res.data);
     });
     app_api.get('leaderboard/all').then((res) => {
       setTotalScore(res.data);
       console.log(res.data, 'text');
     });
     app_api.get('course').then((res) => {
+      setAllCourses(res.data.data);
       setCourseOptions(res.data.data);
-      console.log(res.data.data, 'course');
     });
     app_api
       .get('leaderboard/all')
@@ -334,6 +335,24 @@ export default function StudentDashboard() {
     });
   }, []);
 
+  const onFilterCategoryChange = (value) => {
+    if (value) {
+      setCategoryFilter(value.value);
+      let courses = allCourses.filter(
+        (c) => c.courseCategoryId === value.value
+      );
+      setCourseOptions(courses);
+    } else {
+      setCategoryFilter(null);
+      setCourseOptions(allCourses);
+    }
+  };
+
+  const onFilterCourseChange = (value) => {
+    if (value) setCourseFilter(value.value);
+    else setCourseFilter(null);
+  };
+
   const reportClick = (object) => {
     if (
       object?.courseContent?.type === 'PROBLEM_SET' ||
@@ -347,8 +366,6 @@ export default function StudentDashboard() {
 
   const reportClose = () => setSelected({});
 
-
-  console.log(selectedOption);
   return (
     <>
       <div>
@@ -449,33 +466,34 @@ export default function StudentDashboard() {
                 </div>
               </div>
             </div>
-            <div className="px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-row justify-end space-x-2 mt-5">
+              <Select
+                className="w-3/12"
+                placeholder="Filter by categories"
+                onChange={onFilterCategoryChange}
+                isClearable
+                isSearchable
+                options={categoryoptions.map((x) => ({
+                  ...x,
+                  label: x.name,
+                  value: x.id,
+                }))}
+              />
+              <Select
+                onChange={onFilterCourseChange}
+                className="w-3/12"
+                placeholder="Filter by courses"
+                isClearable
+                isSearchable
+                options={courseoptions.map((y) => ({
+                  ...y,
+                  label: y.name,
+                  value: y.id,
+                }))}
+              />
+            </div>
+            <div className="px-4 sm:px-6 lg:px-8 pb-10">
               <div className="mt-8 flex flex-col">
-                <div className="flex flex-row w-100">
-                  <div className="App w-64 mb-6 text-end ml-auto">
-                    <Select
-                      defaultValue={selectedOption}
-                      onChange={setSelectedOption}
-                      options={categoryoptions.map((x) => ({
-                        ...x,
-                        label: x.name,
-                        value: x.id,
-                      }))}
-                    />
-                  </div>
-                  <div className="App w-64 mb-6 text-end ml-auto">
-                    <Select
-                      defaultValue={selectedOption}
-                      onChange={setSelectedOption}
-                      options={courseoptions.map((y) => ({
-                        ...y,
-                        label: y.name,
-                        value: y.id,
-                      }))}
-                      name="name"
-                    />
-                  </div>
-                </div>
                 <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-1">
                     <div className="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
@@ -484,15 +502,15 @@ export default function StudentDashboard() {
                           <tr>
                             <th
                               scope="col"
-                              className="min-w-[12rem] py-3.5 px-3 text-left text-sm font-semibold text-gray-900"
+                              className="max-w-[33.33%] py-3.5 px-3 text-left text-sm font-semibold text-gray-900"
                             >
                               Title
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                              className="max-w-[33.33%] py-3.5 px-3 text-left text-sm font-semibold text-gray-900"
                             >
-                              Available
+                              Course
                             </th>
                             <th
                               scope="col"
@@ -509,36 +527,52 @@ export default function StudentDashboard() {
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
-                          {userContent.map((u, idx) => (
-                            <tr key={idx}>
-                              {/* {u.courseContent?.course?.courseCategory?.id === selectedOption ? <>
+                          {userContent
+                            .filter((u) => {
+                              if (categoryFilter)
+                                return (
+                                  u?.courseContent?.course?.courseCategory
+                                    ?.id === categoryFilter
+                                );
+                              else return true;
+                            })
+                            .filter((u) => {
+                              if (courseFilter)
+                                return (
+                                  u?.courseContent?.course?.id === courseFilter
+                                );
+                              else return true;
+                            })
+                            .map((u, idx) => (
+                              <tr key={idx}>
+                                {/* {u.courseContent?.course?.courseCategory?.id === selectedOption ? <>
 
                             </>} */}
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {u?.courseContent?.title}
-                              </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {u?.courseContent?.points}
-                              </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {u?.pointsEarned}
-                              </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {[
-                                  'EXERCISE',
-                                  'PROBLEM_SET',
-                                  'PROJECT',
-                                ].includes(u?.courseContent?.type) && (
-                                  <button
-                                    onClick={() => reportClick(u)}
-                                    className="bg-gray-100 text-black w-full p-1 text-sm rounded-lg hover:bg-gray-200"
-                                  >
-                                    Report
-                                  </button>
-                                )}
-                              </td>
-                            </tr>
-                          ))}
+                                <td className=" px-3 py-4 text-sm text-gray-500">
+                                  {u?.courseContent?.title}
+                                </td>
+                                <td className=" px-3 py-4 text-sm text-gray-500">
+                                  {u?.courseContent?.course?.name}
+                                </td>
+                                <td className=" px-3 py-4 text-sm text-gray-500">
+                                  {u?.pointsEarned}/{u?.courseContent?.points}
+                                </td>
+                                <td className=" px-3 py-4 text-sm text-gray-500">
+                                  {[
+                                    'EXERCISE',
+                                    'PROBLEM_SET',
+                                    'PROJECT',
+                                  ].includes(u?.courseContent?.type) && (
+                                    <button
+                                      onClick={() => reportClick(u)}
+                                      className="bg-gray-100 text-black w-full p-1 text-sm rounded-lg hover:bg-gray-200"
+                                    >
+                                      Report
+                                    </button>
+                                  )}
+                                </td>
+                              </tr>
+                            ))}
                         </tbody>
                       </table>
                     </div>
