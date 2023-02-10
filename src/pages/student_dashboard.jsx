@@ -277,7 +277,7 @@ export default function StudentDashboard() {
   const [totalpoints, setTotalPoints] = useState();
   const [score, setTotalScore] = useState(true);
   const [userContent, setUserContent] = useState([]);
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState({});
   const [categoryoptions, setCategoryoptions] = useState([]);
   const [allCourses, setAllCourses] = useState([]);
   const [courseoptions, setCourseOptions] = useState([]);
@@ -354,14 +354,7 @@ export default function StudentDashboard() {
   };
 
   const reportClick = (object) => {
-    if (
-      object?.courseContent?.type === 'PROBLEM_SET' ||
-      object?.courseContent?.type === 'PROJECT'
-    ) {
-      window.open(object?.finalHTMLLink, '_blank');
-    } else {
-      setSelected(object);
-    }
+    setSelected(object);
   };
 
   const reportClose = () => setSelected({});
@@ -609,9 +602,9 @@ export default function StudentDashboard() {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
-                  <div>
-                    <div className="">
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                  {selected?.courseContent?.type === 'EXERCISE' ? (
+                    <div>
                       <label>
                         Code{' '}
                         <span
@@ -627,12 +620,44 @@ export default function StudentDashboard() {
                       </label>
                       <textarea
                         className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none disabled:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm min-h-[400px]"
-                        type="text"
                         disabled
                         value={selected?.code}
                       />
                     </div>
-                  </div>
+                  ) : (
+                    <div>
+                      <label>Comment</label>
+                      <textarea
+                        className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none disabled:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm min-h-[100px]"
+                        disabled
+                        value={selected?.comments}
+                      />
+                      <table className="w-full text-sm text-left mt-5">
+                        <thead className="text-xs text-gray-400 uppercase bg-gray-50">
+                          <tr>
+                            <th scope="col" className=" px-10 py-3">
+                              Rubric
+                            </th>
+                            <th scope="col" className="px-10 py-3">
+                              Score
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {selected?.rubrics?.map((r, idx) => (
+                            <tr key={idx} className="bg-white border-b">
+                              <td className="px-10 py-4 text-black">
+                                {r?.rubric}
+                              </td>
+                              <td className="px-10 py-4">
+                                {r?.score}/{r?.outOf}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
                   <div className="mt-5 sm:mt-6">
                     <button
                       type="button"
