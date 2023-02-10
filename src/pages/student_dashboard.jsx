@@ -19,6 +19,7 @@ import app_api from '../config/config';
 import '../components/progressbar/nested_progress_bar.css';
 import ProgressBar from 'react-customizable-progressbar';
 import { Dialog, Transition } from '@headlessui/react';
+import AsyncSelect from 'react-select/async';
 import {
   LineChart,
   Line,
@@ -276,16 +277,13 @@ export default function StudentDashboard() {
   const [totalpoints, setTotalPoints] = useState();
   const [score, setTotalScore] = useState(true);
   const [userContent, setUserContent] = useState([]);
-  const [selected, setSelected] = useState({});
+  const [selected, setSelected] = useState('');
   const [categoryoptions, setCategoryoptions] = useState([]);
+  const [courseoptions, setCourseOptions] = useState([]);
   const [studentinfo, setStudentInfo] = useState({});
   const params = useParams();
 
-   const options = [
-    {"label":categoryoptions.name, "value":categoryoptions.name}
-  ];
-  
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('');
 
   useEffect(() => {
     app_api
@@ -300,13 +298,17 @@ export default function StudentDashboard() {
           PROJECT: { total: 0, completed: 0 },
         });
       });
-    app_api.get('course-category').then((res) => {
+    app_api.get(`course-category${selectedOption}`).then((res) => {
       setCategoryoptions(res.data);
       console.log(res.data);
     });
     app_api.get('leaderboard/all').then((res) => {
       setTotalScore(res.data);
       console.log(res.data, 'text');
+    });
+    app_api.get('course').then((res) => {
+      setCourseOptions(res.data.data);
+      console.log(res.data.data, 'course');
     });
     app_api
       .get('leaderboard/all')
@@ -321,6 +323,7 @@ export default function StudentDashboard() {
       .get(`course-content/user/${params.studentid}`)
       .then((res) => {
         setUserContent(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         setUserContent([]);
@@ -344,6 +347,8 @@ export default function StudentDashboard() {
 
   const reportClose = () => setSelected({});
 
+
+  console.log(selectedOption);
   return (
     <>
       <div>
@@ -377,9 +382,8 @@ export default function StudentDashboard() {
                   <div className="mb-5 w-6/12">
                     <h3 className="text-sm font-semibold text-gray-500 mb-1">
                       Github Username
-                      Github Username
                     </h3>
-                    <h2 className="inline-flex text-xl font-bold">
+                    <h2 className="inline-flex text-lg font-bold">
                       {studentinfo?.githubUsername}
                     </h2>
                   </div>
@@ -447,19 +451,28 @@ export default function StudentDashboard() {
             </div>
             <div className="px-4 sm:px-6 lg:px-8">
               <div className="mt-8 flex flex-col">
-                <div className="flex flex-row">
+                <div className="flex flex-row w-100">
                   <div className="App w-64 mb-6 text-end ml-auto">
                     <Select
                       defaultValue={selectedOption}
                       onChange={setSelectedOption}
-                      options={categoryoptions}
+                      options={categoryoptions.map((x) => ({
+                        ...x,
+                        label: x.name,
+                        value: x.id,
+                      }))}
                     />
                   </div>
                   <div className="App w-64 mb-6 text-end ml-auto">
                     <Select
                       defaultValue={selectedOption}
                       onChange={setSelectedOption}
-                      options={options}
+                      options={courseoptions.map((y) => ({
+                        ...y,
+                        label: y.name,
+                        value: y.id,
+                      }))}
+                      name="name"
                     />
                   </div>
                 </div>
@@ -498,6 +511,9 @@ export default function StudentDashboard() {
                         <tbody className="divide-y divide-gray-200 bg-white">
                           {userContent.map((u, idx) => (
                             <tr key={idx}>
+                              {/* {u.courseContent?.course?.courseCategory?.id === selectedOption ? <>
+
+                            </>} */}
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 {u?.courseContent?.title}
                               </td>
