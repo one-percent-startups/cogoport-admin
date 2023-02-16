@@ -286,6 +286,7 @@ export default function StudentDashboard() {
 
   const [courseFilter, setCourseFilter] = useState(null);
   const [categoryFilter, setCategoryFilter] = useState(null);
+  const [contentTypeFilter, setContentTypeFilter] = useState(null);
 
   useEffect(() => {
     app_api
@@ -335,6 +336,11 @@ export default function StudentDashboard() {
     });
   }, []);
 
+  const onFilterContentTypeChange = (value) => {
+    if (value) setContentTypeFilter(value.value);
+    else setContentTypeFilter(null);
+  };
+
   const onFilterCategoryChange = (value) => {
     if (value) {
       setCategoryFilter(value.value);
@@ -362,9 +368,10 @@ export default function StudentDashboard() {
   return (
     <>
       <div>
-        <div >
-         
-         <div className="hidden xs:hidden lg:block md:block"> <NavBar />
+        <div>
+          <div className="hidden xs:hidden lg:block md:block">
+            {' '}
+            <NavBar />
           </div>
           <main className="xs:ml-[0em] md:ml-[17em] lg:mr-[19em] 2xl:mr-[23em]">
             <div className="p-4">
@@ -464,6 +471,19 @@ export default function StudentDashboard() {
             <div className="flex flex-row justify-end space-x-2 mt-5">
               <Select
                 className="w-3/12"
+                placeholder="Filter by type"
+                onChange={onFilterContentTypeChange}
+                isClearable
+                isSearchable
+                options={[
+                  { value: 'EXERCISE', label: 'Exercies' },
+                  { value: 'PROBLEM_SET', label: 'Problem set' },
+                  { value: 'PROJECT', label: 'Project' },
+                  { value: 'READING_MATERIAL', label: 'Reading material' },
+                ]}
+              />
+              <Select
+                className="w-3/12"
                 placeholder="Filter by categories"
                 onChange={onFilterCategoryChange}
                 isClearable
@@ -535,6 +555,13 @@ export default function StudentDashboard() {
                               if (courseFilter)
                                 return (
                                   u?.courseContent?.course?.id === courseFilter
+                                );
+                              else return true;
+                            })
+                            .filter((u) => {
+                              if (contentTypeFilter)
+                                return (
+                                  u?.courseContent?.type === contentTypeFilter
                                 );
                               else return true;
                             })
