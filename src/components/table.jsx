@@ -24,6 +24,8 @@ export default function Table() {
 
   const [filterStream, setFilterStream] = useState(null);
 
+  const [search, setSearch] = useState('');
+
   useEffect(() => {
     app_api
       .get(`course-content/batch/1`)
@@ -50,18 +52,27 @@ export default function Table() {
     else setFilterStream(null);
   };
 
+  let regex = new RegExp(search.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'), 'i');
   return (
     <div className="flex flex-col pb-10 mt-10">
-      <Select
-        className="self-end w-4/12"
-        placeholder="Filter by track"
-        isClearable
-        isSearchable
-        options={stream.map((s) => ({ ...s, label: s.name, value: s.id }))}
-        loadingMessage="Getting tracks..."
-        isLoading={streamLoading}
-        onChange={onStreamFilterChange}
-      />
+      <div className="flex justify-between">
+        <input
+          type="text"
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search through students"
+          className="w-4/12 block px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none disabled:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+        />
+        <Select
+          className="w-4/12"
+          placeholder="Filter by track"
+          isClearable
+          isSearchable
+          options={stream.map((s) => ({ ...s, label: s.name, value: s.id }))}
+          loadingMessage="Getting tracks..."
+          isLoading={streamLoading}
+          onChange={onStreamFilterChange}
+        />
+      </div>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="mt-4 flex flex-col">
           <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -106,6 +117,10 @@ export default function Table() {
                     {studentdata
                       .filter((l) => {
                         if (filterStream) return l.streamId == filterStream;
+                        else return true;
+                      })
+                      .filter((l) => {
+                        if (search) return l?.name.match(regex);
                         else return true;
                       })
                       .map((studentlist, idx) => (
