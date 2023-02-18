@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import NavBar from '../components/navigation';
 import Leaderboard from '../components/leaderboard';
 
-import Table from '../components/table';
+import Table from '../components/tables/table';
 
 import moment from 'moment';
 import app_api from '../config/config';
 import SidebarRight from '../components/sidebar/sidebar-right';
+import { student_list_score } from '../components/tables/tableheader';
+import ReactSelect from 'react-select';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -17,6 +19,35 @@ const Dashboard = () => {
   const [score, setTotalScore] = useState(true);
   const [totalpoints, setTotalPoints] = useState(true);
   const [d2dError, setd2dError] = useState(null);
+
+  const [studentdata, setStudentData] = useState([]);
+
+  const [stream, setStream] = useState([]);
+  const [streamLoading, setStreamLoading] = useState(true);
+  const [streamError, setStreamError] = useState(null);
+
+  const [filterStream, setFilterStream] = useState(null);
+
+  useEffect(() => {
+    app_api
+      .get(`course-content/batch/1`)
+      .then((res) => {
+        setStudentData(res.data);
+      })
+      .catch((err) => {});
+    app_api
+      .get('stream')
+      .then((res) => res.data)
+      .then((res) => {
+        setStream(res.data);
+        setStreamLoading(false);
+        setStreamError(null);
+      })
+      .catch((err) => {
+        setStreamLoading(false);
+        setStreamError(err?.response?.data?.message || 'Error getting streams');
+      });
+  }, []);
 
   useEffect(() => {
     try {
@@ -46,6 +77,11 @@ const Dashboard = () => {
       .catch((err) => {});
   }, []);
 
+  const onStreamFilterChange = (value) => {
+    if (value) setFilterStream(value.value);
+    else setFilterStream(null);
+  };
+
   const tabs = [
     { name: 'Academy Batch 1', href: '#', current: true },
     // { name: 'Batch 2', href: '#', current: false },
@@ -60,7 +96,7 @@ const Dashboard = () => {
         <SidebarRight className="right-0 left-auto xl:block" />
       </div>
       <div className="p-4 h-screen xs:ml-[0em] md:ml-[17em] lg:mr-[19em] 2xl:mr-[23em]">
-        <div className="flex flex-wrap  justify-between">
+        <div className="flex flex-wrap justify-between mb-5">
           <div className="flex flex-wrap w-full justify-between items-center">
             <div className="mb-10 w-6/12">
               <h1 className="text-2xl mb-2 mt-5 font-bold ">Welcome back!</h1>
@@ -143,7 +179,23 @@ const Dashboard = () => {
           </div>
           <div />
         </div>
-        <Table />
+        <ReactSelect
+          className="w-4/12 float-right"
+          placeholder="Filter by track"
+          isClearable
+          isSearchable
+          options={stream.map((s) => ({ ...s, label: s.name, value: s.id }))}
+          loadingMessage="Getting tracks..."
+          isLoading={streamLoading}
+          onChange={onStreamFilterChange}
+        />
+        <Table
+          data={studentdata.filter((l) => {
+            if (filterStream) return l.streamId == filterStream;
+            else return true;
+          })}
+          columns={student_list_score}
+        />
       </div>
     </div>
   );

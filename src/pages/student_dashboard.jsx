@@ -38,6 +38,8 @@ import {
   yearlyComparison,
 } from '../data/student-graph.js';
 import { RadioGroup } from '@headlessui/react';
+import Table from '../components/tables/table';
+import { student_dashboard } from '../components/tables/tableheader';
 
 function CustomAxis({ x, y, payload }) {
   return (
@@ -509,7 +511,29 @@ export default function StudentDashboard() {
             </div>
             <div className="px-4 sm:px-6 lg:px-8 pb-10">
               <div className="mt-8 flex flex-col">
-                <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <Table
+                  data={userContent
+                    .filter((u) => {
+                      if (categoryFilter)
+                        return (
+                          u?.courseContent?.course?.courseCategory?.id ===
+                          categoryFilter
+                        );
+                      else return true;
+                    })
+                    .filter((u) => {
+                      if (courseFilter)
+                        return u?.courseContent?.course?.id === courseFilter;
+                      else return true;
+                    })
+                    .filter((u) => {
+                      if (contentTypeFilter)
+                        return u?.courseContent?.type === contentTypeFilter;
+                      else return true;
+                    })}
+                  columns={student_dashboard({ onClickReport: reportClick })}
+                />
+                {/* <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-1">
                     <div className="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                       <table className="min-w-full table-fixed divide-y divide-gray-300">
@@ -567,9 +591,6 @@ export default function StudentDashboard() {
                             })
                             .map((u, idx) => (
                               <tr key={idx}>
-                                {/* {u.courseContent?.course?.courseCategory?.id === selectedOption ? <>
-
-                            </>} */}
                                 <td className=" px-3 py-4 text-sm text-gray-500">
                                   {u?.courseContent?.title}
                                 </td>
@@ -599,7 +620,7 @@ export default function StudentDashboard() {
                       </table>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </main>
