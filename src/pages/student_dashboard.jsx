@@ -479,8 +479,7 @@ export default function StudentDashboard() {
                 isSearchable
                 options={[
                   { value: 'EXERCISE', label: 'Exercies' },
-                  { value: 'PROBLEM_SET', label: 'Problem set' },
-                  { value: 'PROJECT', label: 'Project' },
+                  { value: 'PROBLEM_SET', label: 'Problem set / Projects' },
                   { value: 'READING_MATERIAL', label: 'Reading material' },
                 ]}
               />
