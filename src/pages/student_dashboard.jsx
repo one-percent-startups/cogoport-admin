@@ -872,7 +872,7 @@ function SidebarRight({ className }) {
             <div className="text-center">
               <p class="text-xs font-semibold text-gray-500">Problem Set</p>
               <p class="font-bold text-zinc-700">
-                {batch?.completedProblemSets}
+                {coursedetails?.PROBLEM_SET?.completed}
               </p>
             </div>
 
