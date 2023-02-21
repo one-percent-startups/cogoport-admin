@@ -5,21 +5,7 @@ import Avatar from '../avatar';
 import avatar4 from '../../assets/images/avatar4.jpeg';
 import app_api from '../../config/config';
 
-export default function Sidebar({ className }) {
-  const [batch, setBatch] = useState([]);
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    try {
-      setUser(JSON.parse(localStorage.getItem('cogoportAdminKey')).data);
-    } catch {}
-    app_api
-      .get('batch/1')
-      .then((res) => {
-        setBatch(res.data.data);
-        console.log(res.data.data);
-      })
-      .catch((err) => {});
-  }, []);
+export default function Sidebar({ className, batch, user }) {
   return (
     <aside
       className={classNames(
@@ -43,7 +29,9 @@ export default function Sidebar({ className }) {
 
             <div className="text-center">
               <p class="text-xs font-semibold text-gray-500">Problem Set</p>
-              <p class="font-bold text-zinc-700">{batch?.completedProblemSets}</p>
+              <p class="font-bold text-zinc-700">
+                {batch?.completedProblemSets}
+              </p>
             </div>
 
             <div className="text-center">
@@ -64,7 +52,6 @@ export default function Sidebar({ className }) {
                 </div>
                 {/* <FolderOpenIcon className="h-6 w-6" /> */}
               </div>
-              
             </div>
           </div>
         </div>

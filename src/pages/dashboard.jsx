@@ -15,6 +15,7 @@ function classNames(...classes) {
 }
 const Dashboard = () => {
   const [user, setUser] = useState({});
+  const [batch, setBatch] = useState({});
 
   const [score, setTotalScore] = useState([]);
   const [totalpoints, setTotalPoints] = useState(true);
@@ -28,17 +29,18 @@ const Dashboard = () => {
 
   const [filterStream, setFilterStream] = useState(null);
 
-  const getCourseContentForBatch = (batchId) => {
-    app_api
-      .get(`course-content/batch/${batchId}`)
-      .then((res) => {
-        setStudentData(res.data);
-      })
-      .catch((err) => {});
-  };
+  const [tabIdx, setTabIdx] = useState(0);
+  const [selectdate, setSelectDate] = useState('all');
 
   useEffect(() => {
+    try {
+      setUser(JSON.parse(localStorage.getItem('cogoportAdminKey')).data);
+    } catch {}
+    getBatchDetails(tabs[0].batchId);
+    getLeaderBoardByBatch(tabs[0].batchId);
+    getPointsForBatch(tabs[0].batchId);
     getCourseContentForBatch(tabs[0].batchId);
+    getBatch(tabs[0].batchId);
     app_api
       .get('stream')
       .then((res) => res.data)
@@ -53,12 +55,29 @@ const Dashboard = () => {
       });
   }, []);
 
+  const getBatch = (batchId) => {
+    app_api
+      .get(`batch/${batchId}`)
+      .then((res) => {
+        setBatch(res.data.data);
+      })
+      .catch((err) => {});
+  };
+
+  const getCourseContentForBatch = (batchId) => {
+    app_api
+      .get(`course-content/batch/${batchId}`)
+      .then((res) => {
+        setStudentData(res.data);
+      })
+      .catch((err) => {});
+  };
+
   const getBatchDetails = (batchId) => {
     app_api
       .get(`batch/${batchId}`)
       .then((res) => {
         setBatch(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {});
   };
@@ -90,15 +109,6 @@ const Dashboard = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    try {
-      setUser(JSON.parse(localStorage.getItem('cogoportAdminKey')).data);
-    } catch {}
-    getBatchDetails(tabs[0].batchId);
-    getLeaderBoardByBatch(tabs[0].batchId);
-    getPointsForBatch(tabs[0].batchId);
-  }, []);
-
   const onStreamFilterChange = (value) => {
     if (value) setFilterStream(value.value);
     else setFilterStream(null);
@@ -109,17 +119,14 @@ const Dashboard = () => {
     { name: 'Academy Batch 2', batchId: '3' },
   ];
 
-  const [tabIdx, setTabIdx] = useState(0);
-
   const onTabChange = (newIdx) => {
     setTabIdx(newIdx);
     getPointsForBatch(tabs[newIdx].batchId);
     getBatchDetails(tabs[newIdx].batchId);
     getCourseContentForBatch(tabs[newIdx].batchId);
     getLeaderBoardByBatch(tabs[newIdx].batchId);
+    getBatch(tabs[newIdx].batchId);
   };
-
-  const [selectdate, setSelectDate] = useState('all');
 
   const onChangeSelectDate = (value) => {
     setSelectDate(value);
@@ -136,7 +143,11 @@ const Dashboard = () => {
         <NavBar />
       </div>
       <div className="">
-        <SidebarRight className="right-0 left-auto xl:block" />
+        <SidebarRight
+          className="right-0 left-auto xl:block"
+          user={user}
+          batch={batch}
+        />
       </div>
       <div className="p-4 h-screen xs:ml-[0em] md:ml-[17em] lg:mr-[19em] 2xl:mr-[23em]">
         <div className="flex flex-wrap justify-between mb-5">
