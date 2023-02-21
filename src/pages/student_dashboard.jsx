@@ -478,9 +478,9 @@ export default function StudentDashboard() {
                 isClearable
                 isSearchable
                 options={[
-                  { value: 'EXERCISE', label: 'Exercies' },
-                  { value: 'PROBLEM_SET', label: 'Problem set / Projects' },
-                  { value: 'READING_MATERIAL', label: 'Reading material' },
+                  { value: 'EXERCISE', label: 'Exercises' },
+                  { value: 'PROBLEM_SET', label: 'Problem sets / Projects' },
+                  { value: 'READING_MATERIAL', label: 'Reading materials' },
                 ]}
               />
               <Select
@@ -863,21 +863,21 @@ function SidebarRight({ className }) {
           <p className=" text-md text-center">Student </p>
           <div class="mt-6 grid grid-cols-3 gap-6 text-center lg:text-left bg-card-gray p-2 m-2 rounded-lg">
             <div className="text-center">
-              <p class="text-xs font-semibold text-gray-500">Exercise</p>
+              <p class="text-xs font-semibold text-gray-500">Exercises</p>
               <p class="font-bold text-zinc-700">
                 {coursedetails?.EXERCISE?.completed}
               </p>
             </div>
 
             <div className="text-center">
-              <p class="text-xs font-semibold text-gray-500">Problem Set</p>
+              <p class="text-xs font-semibold text-gray-500">Problem Sets</p>
               <p class="font-bold text-zinc-700">
                 {coursedetails?.PROBLEM_SET?.completed}
               </p>
             </div>
 
             <div className="text-center">
-              <p class="text-xs font-semibold text-gray-500">Project</p>
+              <p class="text-xs font-semibold text-gray-500">Projects</p>
               <p class="font-bold text-zinc-700">1</p>
             </div>
           </div>
