@@ -277,7 +277,6 @@ export default function StudentDashboard() {
   // const [studentname, setStudentName] = useState([]);
   const [coursedetails, setCourseDetails] = useState([]);
   const [totalpoints, setTotalPoints] = useState({});
-  const [score, setTotalScore] = useState(true);
   const [userContent, setUserContent] = useState([]);
   const [selected, setSelected] = useState({});
   const [categoryoptions, setCategoryoptions] = useState([]);
@@ -306,20 +305,10 @@ export default function StudentDashboard() {
     app_api.get(`course-category`).then((res) => {
       setCategoryoptions(res.data);
     });
-    app_api.get('leaderboard/all').then((res) => {
-      setTotalScore(res.data);
-      console.log(res.data, 'text');
-    });
     app_api.get('course').then((res) => {
       setAllCourses(res.data.data);
       setCourseOptions(res.data.data);
     });
-    app_api
-      .get('leaderboard/all')
-      .then((res) => {
-        setTotalScore(res.data);
-      })
-      .catch((err) => {});
     app_api.get(`points/user/${params.studentid}`).then((res) => {
       setTotalPoints(res.data);
     });
@@ -391,23 +380,6 @@ export default function StudentDashboard() {
                   Overall Information
                 </h3>
                 <div className="flex flex-wrap justify-between w-11/12">
-                  <div className="mb-5 w-6/12">
-                    <h3 className="text-xl font-semibold text-gray-500 mb-1">
-                      Total Score
-                    </h3>
-                    <h2 className="inline-flex text-xl font-bold">
-                      {totalpoints?._count?.pointsEarned}
-                    </h2>
-                  </div>
-
-                  <div className="mb-5 w-6/12">
-                    <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                      Github Username
-                    </h3>
-                    <h2 className="inline-flex text-lg font-bold">
-                      {studentinfo?.githubUsername}
-                    </h2>
-                  </div>
                   <div className="mb-5 w-6/12">
                     <h3 className="text-sm font-semibold text-gray-500 mb-1">
                       Stream
