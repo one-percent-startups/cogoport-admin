@@ -25,15 +25,15 @@ export const student_list_score = [
     Cell: (cell) => `${cell.row.original.exercise}%`,
   },
   {
-    Header: 'Problem sets',
+    Header: 'Problem sets / Projects',
     accessor: 'problem_set',
     Cell: (cell) => `${cell.row.original.problem_set}%`,
   },
-  {
-    Header: 'Projects',
-    accessor: 'project',
-    Cell: (cell) => `${cell.row.original.project}%`,
-  },
+  // {
+  //   Header: 'Projects',
+  //   accessor: 'project',
+  //   Cell: (cell) => `${cell.row.original.project}%`,
+  // },
 ];
 
 export const student_dashboard = ({ onClickReport }) => [
