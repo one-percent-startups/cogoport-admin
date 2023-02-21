@@ -103,14 +103,14 @@ export default function Table() {
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        Problem sets
+                        Problem sets / Projects
                       </th>
-                      <th
+                      {/* <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
                         Projects
-                      </th>
+                      </th> */}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
@@ -146,9 +146,9 @@ export default function Table() {
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             {studentlist.problem_set}%
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             {studentlist.project}%
-                          </td>
+                          </td> */}
 
                           {/* <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <a
