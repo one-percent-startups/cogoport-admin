@@ -16,7 +16,7 @@ function classNames(...classes) {
 const Dashboard = () => {
   const [user, setUser] = useState({});
 
-  const [score, setTotalScore] = useState(true);
+  const [score, setTotalScore] = useState([]);
   const [totalpoints, setTotalPoints] = useState(true);
   const [d2dError, setd2dError] = useState(null);
 
@@ -28,13 +28,17 @@ const Dashboard = () => {
 
   const [filterStream, setFilterStream] = useState(null);
 
-  useEffect(() => {
+  const getCourseContentForBatch = (batchId) => {
     app_api
-      .get(`course-content/batch/1`)
+      .get(`course-content/batch/${batchId}`)
       .then((res) => {
         setStudentData(res.data);
       })
       .catch((err) => {});
+  };
+
+  useEffect(() => {
+    getCourseContentForBatch(tabs[0].batchId);
     app_api
       .get('stream')
       .then((res) => res.data)
@@ -49,32 +53,50 @@ const Dashboard = () => {
       });
   }, []);
 
-  useEffect(() => {
-    try {
-      setUser(JSON.parse(localStorage.getItem('cogoportAdminKey')).data);
-    } catch {}
+  const getBatchDetails = (batchId) => {
     app_api
-      .get('batch/1')
+      .get(`batch/${batchId}`)
       .then((res) => {
         setBatch(res.data.data);
         console.log(res.data.data);
       })
       .catch((err) => {});
+  };
 
+  const getPointsForBatch = (batchId) => {
     app_api
-      .get('leaderboard/all')
-      .then((res) => {
-        setTotalScore(res.data);
-        console.log(res.data, 'text');
-      })
-      .catch((err) => {});
-    app_api
-      .get('points/all/batch/1')
+      .get(`points/all/batch/${batchId}`)
       .then((res) => {
         setTotalPoints(res.data);
-        console.log(res.data);
       })
       .catch((err) => {});
+  };
+
+  const getLeaderBoardByBatch = (batchId) => {
+    app_api
+      .get(`leaderboard/all/batch/${batchId}`)
+      .then((res) => {
+        setTotalScore(res.data);
+      })
+      .catch((err) => {});
+  };
+
+  const getLeaderboardDayToDay = () => {
+    app_api
+      .get(`leaderboard/d2d`)
+      .then((res) => {
+        setTotalScore(res.data);
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    try {
+      setUser(JSON.parse(localStorage.getItem('cogoportAdminKey')).data);
+    } catch {}
+    getBatchDetails(tabs[0].batchId);
+    getLeaderBoardByBatch(tabs[0].batchId);
+    getPointsForBatch(tabs[0].batchId);
   }, []);
 
   const onStreamFilterChange = (value) => {
@@ -83,9 +105,30 @@ const Dashboard = () => {
   };
 
   const tabs = [
-    { name: 'Academy Batch 1', href: '#', current: true },
-    // { name: 'Batch 2', href: '#', current: false },
+    { name: 'Academy Batch 1', batchId: '1' },
+    { name: 'Academy Batch 2', batchId: '3' },
   ];
+
+  const [tabIdx, setTabIdx] = useState(0);
+
+  const onTabChange = (newIdx) => {
+    setTabIdx(newIdx);
+    getPointsForBatch(tabs[newIdx].batchId);
+    getBatchDetails(tabs[newIdx].batchId);
+    getCourseContentForBatch(tabs[newIdx].batchId);
+    getLeaderBoardByBatch(tabs[newIdx].batchId);
+  };
+
+  const [selectdate, setSelectDate] = useState('all');
+
+  const onChangeSelectDate = (value) => {
+    setSelectDate(value);
+    if (value === 'all') {
+      getLeaderBoardByBatch(tabs[tabIdx].batchId);
+    } else {
+      getLeaderboardDayToDay();
+    }
+  };
 
   return (
     <div className="flex flex-row">
@@ -114,7 +157,7 @@ const Dashboard = () => {
                     id="tabs"
                     name="tabs"
                     className="block p-4 w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-                    defaultValue={tabs.find((tab) => tab.current).name}
+                    defaultValue={tabs[tabIdx].name}
                   >
                     {tabs.map((tab) => (
                       <option key={tab.id}>{tab.name}</option>
@@ -126,39 +169,44 @@ const Dashboard = () => {
                     className=" isolate flex divide-x divide-gray-400 rounded-lg shadow border-2"
                     aria-label="Tabs"
                   >
-                    {tabs.map((tab, tabIdx) => (
-                      <a
+                    {tabs.map((tab, idx) => (
+                      <button
                         key={tab.name}
-                        href={tab.href}
                         style={{ backgroundColor: 'black' }}
                         className={classNames(
-                          tab.current
+                          tabIdx === idx
                             ? 'text-white bg-balck'
                             : 'text-gray-500 hover:text-gray-900 bg-balck',
-                          tabIdx === 0 ? 'rounded-l-lg bg-balck' : '',
-                          tabIdx === tabs.length - 1
+                          idx === 0 ? 'rounded-l-lg bg-balck' : '',
+                          idx === tabs.length - 1
                             ? 'rounded-r-lg bg-balck'
                             : '',
-                          'group relative flex-1 overflow-hidden border-black bg-balck py-3 px-5 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 focus:bg-black focus:text-white '
+                          'group relative flex-1 overflow-hidden border-black bg-balck py-3 px-5 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 focus:bg-black focus:text-white'
                         )}
-                        aria-current={tab.current ? 'page' : undefined}
+                        aria-current={tabIdx === idx ? 'page' : undefined}
+                        onClick={() => onTabChange(idx)}
                       >
                         <span>{tab.name}</span>
                         <span
                           aria-hidden="true"
                           className={classNames(
-                            tab.current ? 'bg-indigo-500' : 'bg-transparent',
+                            tabIdx === idx ? 'bg-indigo-500' : 'bg-transparent',
                             'absolute inset-x-0 '
                           )}
                         />
-                      </a>
+                      </button>
                     ))}
                   </nav>
                 </div>
               </div>
             </div>
           </div>
-          <Leaderboard className="w-8/12" />
+          <Leaderboard
+            className="w-8/12"
+            selectDate={selectdate}
+            onChangeSelectDate={onChangeSelectDate}
+            leaderboardd2d={score || []}
+          />
           <div className="w-3/12 mt-[30px] 2xl:mt-[10px] mx-auto xl:mx-[0]">
             <h3 className="text-gray-400 mb-3">Overall Information</h3>
             <div className="mb-5">

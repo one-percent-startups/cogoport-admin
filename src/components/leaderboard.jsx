@@ -1,7 +1,5 @@
-import { useLayoutEffect, useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import app_api from '../config/config';
-import { Fragment } from 'react';
-import { Menu, Transition } from '@headlessui/react';
 import {
   ChevronUpIcon,
   ChevronDownIcon,
@@ -9,36 +7,11 @@ import {
   MinusCircleIcon,
 } from '@heroicons/react/20/solid';
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
-
-export default function Leaderboard() {
-  const [user, setUser] = useState({});
-  const [leaderboardd2d, setLeaderboardd2d] = useState([]);
-  const [d2dLoading, setd2dLoading] = useState(true);
-  const [d2dError, setd2dError] = useState(null);
-  const [selectdate, setSelectDate] = useState('all');
-
-  useEffect(() => {
-    try {
-      setUser(JSON.parse(localStorage.getItem('cogoportAdminKey')).data);
-    } catch {}
-  }, []);
-
-  useEffect(() => {
-    app_api
-      .get(`leaderboard/${selectdate}`)
-      // .get('leaderboard/d2d')
-      .then((res) => {
-        setLeaderboardd2d(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        setd2dError(err);
-      });
-  }, [selectdate]);
-
+export default function Leaderboard({
+  onChangeSelectDate,
+  selectDate,
+  leaderboardd2d,
+}) {
   return (
     <div className="px-8 sm:px-6 lg:px-1">
       <div className="flex flex-row justify-between px-5 py-3">
@@ -48,7 +21,8 @@ export default function Leaderboard() {
         <div className="">
           <select
             className="border-0 p-2"
-            onChange={(e) => setSelectDate(e.target.value)}
+            onChange={(e) => onChangeSelectDate(e.target.value)}
+            value={selectDate}
           >
             <option value="all" className="p-3">
               Overall
@@ -60,7 +34,7 @@ export default function Leaderboard() {
         </div>
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg h-[270px]">
-        <table className="w-full  text-sm text-left text-gray-500">
+        <table className="w-full text-sm text-left text-gray-500">
           <thead className="text-xs text-gray-400 uppercase bg-gray-50">
             <tr>
               <th scope="col" className=" px-10 py-3">
@@ -79,7 +53,7 @@ export default function Leaderboard() {
               <tr key={d2dIndx} className="bg-white border-b">
                 <th
                   scope="row"
-                  className="px-10 py-4 text-lg flex font-semibold text-black text-black font-medium  whitespace-nowrap"
+                  className="px-10 py-4 text-lg flex font-semibold text-black text-black font-medium"
                 >
                   {leaderboardd2d.indexOf(d2d) + 1 === 1 ? (
                     <>
